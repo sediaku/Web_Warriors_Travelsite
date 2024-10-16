@@ -1,0 +1,200 @@
+html{
+    font-size: 20px;
+}
+
+
+.topnav h1{
+    float: left;
+    padding: 6px;
+    border: none;
+    margin-top: 0%;
+    font-size: 1rem;
+    position:relative;
+    top:0;
+    left:0;
+    color: rgb(8, 70, 8);
+    font-weight: bold;
+}
+
+.topnav {
+    overflow: hidden;
+    border: 0.1rem solid rgb(11, 88, 11);
+
+}
+
+.topnav .bar{
+    margin-left: 64%;
+}
+.topnav a{
+    float:left;
+    color: black;
+    text-align:center;
+    padding:14px 16px;
+    text-decoration: none;
+    font-size:.9rem;
+}
+.topnav a:hover{
+    text-decoration: underline;
+    color:rgb(8, 70, 8);
+}
+.topnav a.active{
+    color:rgb(8, 70, 8);
+    font-weight: bold;
+}
+
+.first{
+    width: 100%;
+    min-height: 15rem;
+    color:white;
+    background: url("Aburi-Botanical-Gardens.jpg") center no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 0;
+    padding-top: 20%;
+}
+
+.first h1{
+    font-weight: bold;
+    font-size: 450%;
+    margin-left: 20%;
+    margin-top: -10%;
+    
+}
+
+.first p{
+    font-size: 200%;
+    margin-left: 20%;
+    
+}
+
+button{ 
+    background-color: rgb(8, 70, 8);
+    color: white;
+    font-size: 110%;
+    padding: 1%;
+    border-radius: 0.2rem;
+}
+
+button:hover{
+    background-color: rgb(11, 88, 11);
+}
+
+.second{
+    width: 100%;
+    min-height: 15rem;
+    background: url("WhatsApp Image 2024-10-11 at 21.35.50_4053a984.jpg") center no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 0;
+    padding-top: 20%;
+}
+
+.second div{
+    background-color: white;
+    color: black;
+    width:30%;
+    margin-top: -25%;
+    margin-left: 10%;
+    padding:2%;
+}
+
+.second h1{
+    font-weight: bold;
+    font-size: 250%;
+}
+
+.second p{
+    font-size: 105%; 
+    line-height: 1.5;
+}
+
+.second button{
+    margin-top: -30%;
+    margin-left:35%;
+}
+
+.third{
+    width: 100%;
+    min-height: 15rem;
+    background: url("WhatsApp Image 2024-10-11 at 21.05.19_5ea995eb.jpg") center no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 0;
+    padding-top: 20%;
+}
+
+.third div{
+    background-color: white;
+    color: black;
+    width:30%;
+    margin-top: -25%;
+    margin-left: 60%;
+    padding: 2%;
+}
+
+.third h1{
+    font-weight: bold;
+    font-size: 250%;
+}
+
+.third p{
+    font-size: 105%; 
+    line-height: 1.5; 
+}
+
+.third button{
+    margin-left:70%;
+    margin-top: -35%;
+}
+
+.fourth{
+    width: 100%;
+    min-height: 15rem;
+    background: url("16781085781844_7w4a1950copy.jpg") center no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 0;
+    padding-top: 20%;
+}
+.fourth div{
+    background-color: white;
+    color: black;
+    width:30%;
+    margin-top: -25%;
+    margin-left: 30%;
+    padding: 2%;
+}
+
+.fourth h1{
+    font-weight: bold;
+    font-size: 250%;
+}
+
+.fourth p{
+    font-size: 105%; 
+    line-height: 1.5;
+}
+
+.fourth button{
+    margin-left:27%;
+    margin-top: -35%;
+}
+
+footer{
+    margin-top: 2%;
+    background-color: rgb(78, 76, 76);
+    color: white;
+    padding-left: 2%;
+}
+
+
+footer a{
+    color:white;
+    text-decoration: none;
+}
+
+footer a:hover{
+    text-decoration: underline;
+
+}
+
