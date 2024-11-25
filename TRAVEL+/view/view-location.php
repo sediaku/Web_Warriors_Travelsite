@@ -11,8 +11,8 @@
 
     <body>
     <header>
-            <?php include 'navbar_in.php'; ?>
-        </header>
+        <?php include 'navbar_in.php'; ?>
+    </header>
 
         <section class="location-view">
             <div class = "left">

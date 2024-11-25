@@ -13,8 +13,18 @@
         <header>
             <div class="topnav">
                 <h1>TRAVEL+ GH</h1>
-                <nav class="bar">
-                    <button class = "account"><span class="material-symbols-outlined">account_circle</span></button>
+                <nav class="bar" id="mainNav">
+                    <div class="account-container">
+                        <button class="account" id="accountBtn">
+                            <span class="material-symbols-outlined">account_circle</span>
+                        </button>
+                        <div class="account-dropdown" id="accountDropdown">
+                            <a href="view/login.php">Login</a>
+                            <a href="view/signup.php">Sign Up</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Navigation Links -->
                     <a href="view/storyboard.php">Storyboard</a>
                     <a href="view/contact-us.php">Contact Us</a>
                     <a href="view/about.php">About The Project</a>
@@ -22,12 +32,11 @@
                 </nav>
 
                 <div>
-                    <button class = "view-more">
+                    <button class="view-more" id="viewMoreBtn">
                         <span class="material-symbols-outlined">menu</span>
                     </button>
                 </div>
             </div>
-
         </header>
 
         <section class = "first">
@@ -62,6 +71,7 @@
         <footer>
             <?php include 'view/footer.php'; ?>
         </footer>
+        <script src="assets/js/navbar.js"></script>
     </body>
 </html>
 
