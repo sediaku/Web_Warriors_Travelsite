@@ -1,19 +1,41 @@
 <?php
-
+// Include the database configuration file
 require_once 'db.config.php';
 
-
+// Start the session
 session_start();
 
-
+// Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    die("Access denied: You must be logged in to perform this action.");
+    http_response_code(403); // Forbidden
+    echo "Access denied: You must be logged in to perform this action.";
+    exit;
 }
 
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add-to-wishlist'])) {
+// Get the raw POST data
+$rawData = file_get_contents("php://input");
+$data = json_decode($rawData, true);
+
+if (isset($data['location_name'])) {
     $userId = $_SESSION['user_id']; 
-    $locationId = $_POST['location_id']; 
+    $locationName = $data['location_name'];
+
     
+    $locationQuery = "SELECT id FROM location WHERE name = ?";
+    $stmt = $conn->prepare($locationQuery);
+    $stmt->bind_param("s", $locationName);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 0) {
+        echo "Location not found.";
+        exit;
+    }
+
+    $locationRow = $result->fetch_assoc();
+    $locationId = $locationRow['id'];
+
+    // Check if the location is already in the wishlist
     $checkQuery = "SELECT * FROM wishlist WHERE user_id = ? AND location_id = ?";
     $stmt = $conn->prepare($checkQuery);
     $stmt->bind_param("ii", $userId, $locationId);
@@ -36,9 +58,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add-to-wishlist'])) {
         echo "Failed to add location to wishlist: " . $stmt->error;
     }
 
-    // Close the statement
     $stmt->close();
+} else {
+    http_response_code(400); 
+    echo "Invalid request.";
 }
 
-// Close the database connection
+
 $conn->close();
+?>
