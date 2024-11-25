@@ -1,0 +1,63 @@
+button {
+    background-color: rgb(8, 70, 8);
+    color: white;
+    font-size: 110%;
+    padding: 0.5 1% 0.5% 1%;
+    border-radius: 0.2rem;
+    margin-bottom: 2rem;
+}
+
+button:hover {
+    background-color: rgb(11, 88, 11);
+}
+
+
+section{
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+
+
+
+/* Tablet Media Query */
+@media screen and (max-width: 768px) {
+    section{
+        font-size: 200%;
+        grid-template-columns: 1fr;
+    }
+    
+    .left div{
+        max-width: 100%;
+    }
+
+    .right div{
+        max-width: 100%;
+    }
+
+    section{
+        grid-template-columns: 1fr;
+    }
+
+
+}
+
+/* Mobile Media Query */
+@media screen and (max-width: 480px) {
+    section{
+        font-size: 200%;
+        grid-template-columns: 1fr;
+    }
+
+    section div{
+        max-width: 100%;
+    }
+
+    .left div{
+        max-width: 100%;
+    }
+
+    .right div{
+        max-width: 100%;
+    }
+}
