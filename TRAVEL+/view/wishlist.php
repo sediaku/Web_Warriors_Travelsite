@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../db/db-config.php';
+include '../assets/css/style.css';
 
 if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
     if($_SESSION['role'] ==1){
@@ -8,7 +9,9 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
     }else {
         include '../assets/admin-navbar.php'; 
     }
-} 
+}else{
+    include 'navbar_guest.php';
+}
 ?>
 
 <!DOCTYPE html>
