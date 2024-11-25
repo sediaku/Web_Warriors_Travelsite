@@ -59,8 +59,9 @@ section{
 @media screen and (max-width: 768px) {
     section{
         font-size: 200%;
+        grid-template-columns: 1fr;
     }
-
+    
     section div{
         max-width: 100%;
     }
@@ -72,12 +73,6 @@ section{
     .right div{
         max-width: 100%;
     }
-
-
-    section{
-        grid-template-columns: 1fr;
-    }
-
 
 }
 
@@ -85,6 +80,7 @@ section{
 @media screen and (max-width: 480px) {
     section{
         font-size: 200%;
+        grid-template-columns: 1fr;
     }
 
     section div{
@@ -98,10 +94,4 @@ section{
     .right div{
         max-width: 100%;
     }
-
-
-    section{
-        grid-template-columns: 1fr;
-    }
- 
 }
