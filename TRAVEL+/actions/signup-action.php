@@ -4,10 +4,7 @@ $dbConnection = getDatabaseConnection();
 
 session_start();
 
-if(isset($_SESSION["email"])){
-    header("location: ../login.php");
-    exit;
-}
+
 
 $username = "";
 $email = "";
@@ -83,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $_SESSION["date_joined"]=$date_joined;
 
         $successMessage = "User registered successfully.";
-        header("location: ../index.php");
+        header("location: ../login.php");
         exit;
     }
 }
