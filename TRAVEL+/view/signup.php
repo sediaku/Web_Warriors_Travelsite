@@ -11,7 +11,7 @@
 
     <body>
         <header>
-            <?php include '../navbar_guest.php'; ?>
+            <?php include 'navbar_guest.php'; ?>
         </header>
 
         <section class="signup-login">
@@ -53,6 +53,6 @@
         <footer>
             <?php include 'footer.php'; ?>
         </footer>
-        
+
     </body>
 </html>
