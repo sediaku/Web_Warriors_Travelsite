@@ -21,7 +21,7 @@ if (isset($data['location_name'])) {
     $locationName = $data['location_name'];
 
     
-    $locationQuery = "SELECT id FROM location WHERE name = ?";
+    $locationQuery = "SELECT location_id FROM locations WHERE location_name = ?";
     $stmt = $conn->prepare($locationQuery);
     $stmt->bind_param("s", $locationName);
     $stmt->execute();
@@ -33,7 +33,7 @@ if (isset($data['location_name'])) {
     }
 
     $locationRow = $result->fetch_assoc();
-    $locationId = $locationRow['id'];
+    $locationId = $locationRow['location_id'];
 
     // Check if the location is already in the wishlist
     $checkQuery = "SELECT * FROM wishlist WHERE user_id = ? AND location_id = ?";
