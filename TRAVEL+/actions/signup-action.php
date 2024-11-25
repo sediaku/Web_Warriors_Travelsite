@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $statement->bind_param("s",$email);
 
     $statement->execute();
-
+    // Check if username already exists.
     $statement->store_result();
     if ($statement->num_rows > 0){
         $email_error = "Email is already used";
