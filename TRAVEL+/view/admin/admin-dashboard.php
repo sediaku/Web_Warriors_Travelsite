@@ -3,8 +3,9 @@
     <head>
         <meta charset="UTF-8">
         <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
-        <title>Location</title>  
-        <link rel = "stylesheet" href = "../assets/css/location-style.css">
+        <title>Admin Dashboard</title>
+        <link rel = "stylesheet" href = "../assets/css/style.css">
+        <link rel = "stylesheet" href = "../assets/css/admin-dashboard-style.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
     </head>
 
@@ -38,10 +39,12 @@
                     </div>
                 </div>
 
-                <h1>My Posts</h1>
-                <div class = "posts"></div>
-                <h1>My Reviews</h1>
-                <div class = "reviews"></div>
+                <div class = "personal">
+                    <h1>My Posts</h1>
+                    <div class = "posts"></div>
+                    <h1>My Reviews</h1>
+                    <div class = "reviews"></div>
+                </div>
             </div>
 
             <div class = "active-users">
