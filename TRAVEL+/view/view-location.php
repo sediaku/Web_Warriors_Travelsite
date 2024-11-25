@@ -4,7 +4,6 @@
         <meta charset="UTF-8">
         <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
         <title>Location</title>  
-        <link rel = "stylesheet" href = "../assets/css/style.css">
         <link rel = "stylesheet" href = "../assets/css/location-style.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
     </head>
@@ -33,10 +32,36 @@
                 <div class = "review-section">
                     <h1>Reviews</h1>
                     <div class = "reviews"></div>
-                    <button>Add Review</button>
+                    <button class="add-review-btn">Add Review</button>
                 </div>
             </div>
-
         </section>
+        <div id="reviewModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <h2>Write a Review!</h2>
+                    <form class="review-form" id="reviewForm">
+                        <div>
+                            <label>Rating</label>
+                            <div class="star-rating" id="starRating">
+                                <span class="star" data-rating="1">&#9734</span>
+                                <span class="star" data-rating="2">&#9734</span>
+                                <span class="star" data-rating="3">&#9734</span>
+                                <span class="star" data-rating="4">&#9734</span>
+                                <span class="star" data-rating="5">&#9734</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="reviewText">Your Review</label>
+                            <textarea id="reviewText" placeholder="Share Your Experience..." required></textarea>
+                        </div>
+                        <div class="modal-buttons">
+                            <button type="button" class="cancel-review">Cancel</button>
+                            <button type="submit" class="submit-review" disabled>Submit Review</button>
+                        </div>
+                    </form>
+                </div>
+        </div>
+        <script src="../assets/js/review.js"></script>
     </body>
 </html>
