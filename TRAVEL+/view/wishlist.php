@@ -34,11 +34,11 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
             
 
             
-            session_start();
+            
 
             
             if (!isset($_SESSION['user_id'])) {
-                echo "<tr><td colspan='2'>You must be logged in to view your wishlist.</td></tr>";
+                echo "<tr><td>You must be logged in to view your wishlist.</td></tr>";
                 exit;
             }
 
