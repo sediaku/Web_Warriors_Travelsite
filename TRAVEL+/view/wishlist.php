@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+require_once 'db-config.php';
 
 if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
     if($_SESSION['role'] ==1){
@@ -31,7 +31,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
         <tbody>
             <?php
             
-            require_once 'db-config.php';
+            
 
             
             session_start();
