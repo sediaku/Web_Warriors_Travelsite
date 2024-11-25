@@ -34,10 +34,30 @@
                 <div class = "comment-section">
                     <h1>Comments</h1>
                     <div class = "comments"></div>
-                    <button>Add Comment</button>
+                    <button class="add-comment-btn">Add Comment</button>
                 </div>
             </div>
 
         </section>
+        <div id="commentModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="modal-header">
+                    <h2>Add a Comment!</h2>
+                </div>
+                <form id="commentForm" class="comment-form">
+                    <textarea 
+                    class="comment-textarea"
+                    placeholder="Type your comment here!"
+                    required
+                    ></textarea>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-cancel">Cancel</button>
+                        <button type="submit" class="btn btn-submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script src="../assets/js/blog.js"></script>
     </body>
 </html>
