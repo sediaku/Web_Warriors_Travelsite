@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
-        <title>Location Management</title>
+        <title>User Management</title>
         <link rel = "stylesheet" href = "../../assets/css/style.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
     </head>
