@@ -21,26 +21,26 @@
                 <div class = "input-field">     
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username" required value="<?= $username ?>">
-                    <span class="text-danger"><?= $username_error ?></span>
                 </div>
+                <span class="text-danger"><?= $username_error ?></span>
 
                 <div class = "input-field">
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" required value="<?= $email ?>">
-                    <span class="text-danger"><?= $email_error ?></span>
                 </div>
+                <span class="text-danger"><?= $email_error ?></span>
 
                 <div class = "input-field">
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" required>
-                    <span class="text-danger"><?= $password_error ?></span>
                 </div>
+                <span class="text-danger"><?= $password_error ?></span>
 
                 <div class = "input-field">
                     <label for="password">Confirm Password:</label>
                     <input type="password" id="password-confirm" name="confirm_password" required>
-                    <span class="text-danger"><?= $confirm_password_error ?></span>
                 </div>
+                <span class="text-danger"><?= $confirm_password_error ?></span>
 
                 <button type = "submit" class = "button">Sign Up</button>
 

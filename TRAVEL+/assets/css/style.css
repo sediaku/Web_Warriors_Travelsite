@@ -65,7 +65,13 @@ footer a:hover {
     text-decoration: underline;
 }
 
-
+.text-danger{
+    font-size: 50%;
+    color: red;
+    background-color: white;
+    border: red;
+    font-weight: bold;
+}
 
 
 /* Tablet Media Query */
