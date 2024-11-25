@@ -1,17 +1,9 @@
 <?php
 session_start();
 include '../db/db-config.php';
-include '../assets/css/style.css';
 
-if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
-    if($_SESSION['role'] ==1){
-        include 'navbar_in.php'; 
-    }else {
-        include '../assets/admin-navbar.php'; 
-    }
-}else{
-    include 'navbar_guest.php';
-}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -20,8 +12,24 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Wishlist</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/wishlist.css">
 </head>
 <body>
+    <header>
+        <?php
+            if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
+                if($_SESSION['role'] ==1){
+                    include 'navbar_in.php'; 
+                }else {
+                    include '../assets/admin-navbar.php'; 
+                }
+            }else{
+                include 'navbar_guest.php';
+            }
+        ?>
+    </header>
     <h1>My Wishlist</h1>
 
     <table>
