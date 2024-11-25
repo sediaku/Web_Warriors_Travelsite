@@ -15,17 +15,29 @@ button:hover {
 section{
     margin-top: 2rem;
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 7fr 2fr;
+    gap: 2%;
+}
+
+section div{
+    padding: 1%;
 }
 
 .stats{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 2%;
+    border-right: 0.1rem solid rgb(8, 70, 8);
 }
 
 .stats div{
-    border:0.1% solid rgb(8, 70, 8);
-    size: 20%;
+    border: 0.1rem solid rgb(8, 70, 8);
+    border-radius: 0.5rem;
+    padding: 2%;
+}
+
+.stats div:hover{
+    background-color: whitesmoke;
 }
 
 
@@ -36,6 +48,10 @@ section{
         font-size: 200%;
         grid-template-columns: 1fr;
     }
+    .stats{
+        grid-template-columns: 1fr;
+        margin-bottom: 1%;
+    }
     
     .left div{
         max-width: 100%;
@@ -45,11 +61,6 @@ section{
         max-width: 100%;
     }
 
-    section{
-        grid-template-columns: 1fr;
-    }
-
-
 }
 
 /* Mobile Media Query */
@@ -58,11 +69,11 @@ section{
         font-size: 200%;
         grid-template-columns: 1fr;
     }
-
-    section div{
-        max-width: 100%;
+    .stats{
+        grid-template-columns: 1fr;
+        margin-bottom: 1%;
     }
-
+    
     .left div{
         max-width: 100%;
     }

@@ -48,6 +48,7 @@
             </div>
 
             <div class = "active-users">
+                <h1>Top Users</h1>
             </div>
 
         </section>
