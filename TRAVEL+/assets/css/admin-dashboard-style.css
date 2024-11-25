@@ -18,6 +18,16 @@ section{
     grid-template-columns: 3fr 1fr;
 }
 
+.stats{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.stats div{
+    border:0.1% solid rgb(8, 70, 8);
+    size: 20%;
+}
+
 
 
 /* Tablet Media Query */
