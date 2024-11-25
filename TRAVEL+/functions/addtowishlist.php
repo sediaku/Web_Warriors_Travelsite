@@ -1,18 +1,18 @@
 <?php
-// Include the database configuration file
+
 require_once 'db.config.php';
 
-// Start the session
+
 session_start();
 
-// Check if the user is logged in
+
 if (!isset($_SESSION['user_id'])) {
-    http_response_code(403); // Forbidden
+    http_response_code(403); 
     echo "Access denied: You must be logged in to perform this action.";
     exit;
 }
 
-// Get the raw POST data
+
 $rawData = file_get_contents("php://input");
 $data = json_decode($rawData, true);
 
@@ -35,7 +35,7 @@ if (isset($data['location_name'])) {
     $locationRow = $result->fetch_assoc();
     $locationId = $locationRow['location_id'];
 
-    // Check if the location is already in the wishlist
+ 
     $checkQuery = "SELECT * FROM wishlist WHERE user_id = ? AND location_id = ?";
     $stmt = $conn->prepare($checkQuery);
     $stmt->bind_param("ii", $userId, $locationId);
@@ -47,7 +47,7 @@ if (isset($data['location_name'])) {
         exit;
     }
 
-    // Add the location to the wishlist
+    
     $insertQuery = "INSERT INTO wishlist (user_id, location_id) VALUES (?, ?)";
     $stmt = $conn->prepare($insertQuery);
     $stmt->bind_param("ii", $userId, $locationId);
@@ -66,4 +66,4 @@ if (isset($data['location_name'])) {
 
 
 $conn->close();
-?>
+
