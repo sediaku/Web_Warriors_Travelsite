@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'db-config.php';
+include 'db-config.php';
 
 if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
     if($_SESSION['role'] ==1){
