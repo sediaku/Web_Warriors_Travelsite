@@ -10,7 +10,7 @@
 
     <body>
         <header>
-            <?php include '../navbar_guest.php'; ?>
+            <?php include 'navbar_in.php'; ?>
         </header>
 
         <section class="user-dash">
@@ -19,7 +19,7 @@
             <h1>My Reviews</h1>
             <div class = "my-reviews"></div>
         </section>
-        
+
         <footer>
             <?php include 'footer.php'; ?>
         </footer>

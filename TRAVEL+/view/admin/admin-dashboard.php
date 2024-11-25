@@ -11,7 +11,7 @@
 
     <body>
         <header>
-            <?php include '../navbar_guest.php'; ?>
+            <?php include 'admin-navbar.php'; ?>
         </header>
 
         <section class="admin-dash">
