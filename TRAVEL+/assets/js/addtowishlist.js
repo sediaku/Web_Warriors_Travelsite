@@ -8,7 +8,7 @@ document.querySelectorAll('.wishlist[name="add-to-wishlist"]').forEach(button =>
         const locationName = parentDiv.querySelector('.name').textContent.trim();
 
         
-        fetch('addtowishlist.php', {
+        fetch('../functions/addtowishlist.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

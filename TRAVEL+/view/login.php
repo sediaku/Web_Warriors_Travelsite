@@ -14,7 +14,7 @@
         </header>
 
         <section class="signup-login">
-            <form class="form">
+            <form class="form" method="post" action="../actions/login-action.php">
                 <h1>Login</h1>
                 
                 <div class = "input-field">     

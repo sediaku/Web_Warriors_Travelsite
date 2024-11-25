@@ -1,6 +1,7 @@
 <?php
 
-require_once 'db.config.php';
+require_once '../db/db-config.php';
+$dbConnection = getDatabaseConnection();
 
 
 session_start();
@@ -22,7 +23,7 @@ if (isset($data['location_id'])) {
 
     
     $deleteQuery = "DELETE FROM wishlist WHERE user_id = ? AND location_id = ?";
-    $stmt = $conn->prepare($deleteQuery);
+    $stmt = $dbConnection->prepare($deleteQuery);
     $stmt->bind_param("ii", $userId, $locationId);
 
     if ($stmt->execute()) {
@@ -37,5 +38,5 @@ if (isset($data['location_id'])) {
     echo "Invalid request.";
 }
 
-$conn->close();
+$dbConnection->close();
 ?>
