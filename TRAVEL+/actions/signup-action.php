@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $_SESSION["date_joined"]=$date_joined;
 
         $successMessage = "User registered successfully.";
-        header("location: ../login.php");
+        header("location: ../view/login.php");
         exit;
     }
 }
