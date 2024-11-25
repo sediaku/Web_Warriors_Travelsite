@@ -7,7 +7,6 @@ html {
     grid-template-columns: 1fr 2fr;
     overflow: hidden;
     border: 0.1rem solid rgb(11, 88, 11);
-    max-height: 4.5vw;
     padding: 0.2% 0% 0.2% 0%;
 }
 
@@ -48,20 +47,39 @@ html {
     display: none;
 }
 
+.topnav .account {
+    float: right;
+    background-color: white;
+    min-height: 90%;
+    border: none;
+    color: black;
+}
 
-footer {
+.topnav .account:hover{
+    cursor: pointer;
+}
+
+.downnav {
     margin-top: 2%;
     background-color: rgb(78, 76, 76);
     color: white;
-    padding-left: 2%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 2%;
 }
 
-footer a {
+.downnav div{
+    border: white 0.1rem solid;
+    padding: 2%;
+}
+
+
+.downnav a {
     color: white;
     text-decoration: none;
 }
 
-footer a:hover {
+.downnav a:hover {
     text-decoration: underline;
 }
 
@@ -100,11 +118,15 @@ footer a:hover {
         display: inline;
         float: right;
         border: none;
-        max-height: 90%;
     }
     
     .topnav .view-more:hover{
         cursor: pointer; 
+    }
+
+    .downnav {
+        grid-template-columns: 1fr;
+        font-size: 150%;
     }
 
 }
@@ -136,10 +158,14 @@ footer a:hover {
         float: right;
         border: none;
         max-height: 90%;
-
     }
     
     .topnav .view-more:hover{
         cursor: pointer; 
     }
+
+    .downnav {
+        grid-template-columns: 1fr;
+    }
+
 }

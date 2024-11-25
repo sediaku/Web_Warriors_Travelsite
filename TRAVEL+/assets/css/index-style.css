@@ -19,18 +19,6 @@
     margin-left: 10%;
 }
 
-button {
-    background-color: rgb(8, 70, 8);
-    color: white;
-    font-size: 110%;
-    padding: 1%;
-    border-radius: 0.2rem;
-}
-
-button:hover {
-    background-color: rgb(11, 88, 11);
-}
-
 .second {
     width: 100%;
     min-height: 15rem;
@@ -98,6 +86,18 @@ button:hover {
 .fourth button {
     margin-left: 27%;
     margin-top: -35%;
+}
+
+.second button, .third button, .fourth button{
+    background-color: rgb(8, 70, 8);
+    color: white;
+    font-size: 110%;
+    padding: 1%;
+    border-radius: 0.2rem;
+}
+
+.second button:hover, .third button:hover, .fourth button:hover {
+    background-color: rgb(11, 88, 11);
 }
 
 .second h1, .third h1, .fourth h1 {
