@@ -18,7 +18,7 @@
                 <div class = "name">Location Name</div>
                 <div class = "book"><a href="">Book Now</a></div>
                 <div class = "rating">Average Rating:<span>4.00</span></div>
-                <button class = "wishlist">Add to Wishlist</button>
+                <button name ="add-to-wishlist" class = "wishlist">Add to Wishlist</button>
                 <button class = "wishlist">See Blog Posts Mentioning This Location</button>
             </div>
 
