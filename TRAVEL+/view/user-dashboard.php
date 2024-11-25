@@ -19,5 +19,9 @@
             <h1>My Reviews</h1>
             <div class = "my-reviews"></div>
         </section>
+        
+        <footer>
+            <?php include 'footer.php'; ?>
+        </footer>
     </body>
 </html>
