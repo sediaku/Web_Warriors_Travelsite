@@ -23,7 +23,6 @@ section button:hover {
     background-color: rgb(11, 88, 11);
 }
 
-
 .left div, .left button{
     max-width: 90%;
     border: 0.1rem solid rgb(11, 88, 11);
