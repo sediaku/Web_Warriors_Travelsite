@@ -2,11 +2,13 @@
 session_start();
 
 
-if (isset($_SESSION['user_id'])) {
-    include 'navbar_in.php'; 
-} else {
-    include '../assets/admin-navbar.php'; 
-}
+if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
+    if($_SESSION['role'] ==1){
+        include 'navbar_in.php'; 
+    }else {
+        include '../assets/admin-navbar.php'; 
+    }
+} 
 ?>
 
 <!DOCTYPE html>
