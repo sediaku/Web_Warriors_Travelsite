@@ -1,0 +1,98 @@
+.signup-login {
+    width: 100%;
+    min-height: 15rem;
+    background: url("../images/Oasis-Beach-2.jpg") center no-repeat;
+    background-size: cover;
+    padding-top: 20%;    
+    display: flex;
+    justify-content: center;
+}
+
+
+.signup-login .form{
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 25%;
+    max-height: 70%;
+    margin-top: -12%;
+    margin-bottom: 15%;
+    background: transparent;
+    border: 3px solid rgba(105,98,89,255);
+    backdrop-filter: blur(0.3rem);
+    border-radius: 0.5rem;
+    padding: 1.5rem 2rem;
+}
+
+.signup-login .input-field {
+    max-width:100%;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    margin-bottom: 0.3rem;
+    font-size: 100%;
+}
+
+.signup-login .input-field input{
+    max-width:90%;
+    font-size: 100%;
+}
+
+
+.signup-login h1 {
+    text-align: center;
+}
+
+
+.signup-login .button{
+    background: rgba(105,98,89,255);
+    margin-top: 10%;
+    width: 95%;
+    font-weight: bold;
+    padding: 2.5%;
+}
+
+
+.signup-login .switch-login-signup{
+    font-size: 70%;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+
+.switch-login-signup p a{
+    font-weight: 600;
+    text-decoration: none;
+    color: white;
+}
+
+
+.switch-login-signup a:hover{
+    text-decoration: underline;
+}
+
+
+
+/* Tablet Media Query */
+@media screen and (max-width: 768px) {
+    .signup-login .form{
+        width: 80%;
+        font-size:200%;
+        max-height: 70%;
+        margin-top: -12%;
+        margin-bottom: 15%;
+    }
+    
+    
+}
+
+/* Mobile Media Query */
+@media screen and (max-width: 480px) {
+    .signup-login .form{
+        width: 80%;
+        font-size: 200%;
+        max-height: 70%;
+        margin-top: -12%;
+        margin-bottom: 15%;
+    }
+    
+
+}
