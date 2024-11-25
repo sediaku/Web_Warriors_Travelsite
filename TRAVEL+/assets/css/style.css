@@ -66,10 +66,10 @@ footer a:hover {
 }
 
 .text-danger{
-    font-size: 50%;
+    font-size: 70%;
     color: red;
-    background-color: white;
-    border: red;
+    margin: 1% 0% 1% 0%;
+    padding: 1%;
     font-weight: bold;
 }
 
