@@ -4,13 +4,14 @@
         <meta charset="UTF-8">
         <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
         <title>Location</title>  
+        <link rel = "stylesheet" href = "../assets/css/style.css">
         <link rel = "stylesheet" href = "../assets/css/location-style.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
     </head>
 
     <body>
-        <header>
-            <?php include '../navbar_guest.php'; ?>
+    <header>
+            <?php include 'navbar_in.php'; ?>
         </header>
 
         <section class="location-view">
@@ -52,7 +53,7 @@
                             </div>
                         </div>
                         <div>
-                            <label for="reviewText">Your Review</label>
+                            <label for="reviewText">Your Review</label><br>
                             <textarea id="reviewText" placeholder="Share Your Experience..." required></textarea>
                         </div>
                         <div class="modal-buttons">

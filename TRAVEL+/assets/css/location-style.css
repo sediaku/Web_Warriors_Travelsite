@@ -1,52 +1,3 @@
-html {
-    font-size: 1.51vw;
-}
-
-.topnav {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    overflow: hidden;
-    border: 0.1rem solid rgb(11, 88, 11);
-    max-height: 4.5vw;
-}
-
-.topnav h1 {
-    float: left;
-    padding: 0.40vw;
-    border: none;
-    margin-top: 0%;
-    font-size: 1rem;
-    position: relative;
-    top: 0;
-    left: 0;
-    color: rgb(8, 70, 8);
-    font-weight: bold;
-}
-
-
-.topnav a {
-    float: right;
-    color: black;
-    text-align: center;
-    padding: 1.06vw 1.21vw;
-    text-decoration: none;
-    font-size: .9rem;
-}
-
-.topnav a:hover {
-    text-decoration: underline;
-    color: rgb(8, 70, 8);
-}
-
-.topnav a.active {
-    color: rgb(8, 70, 8);
-    font-weight: bold;
-}
-
-.topnav .view-more {
-    display: none;
-}
-
 button {
     background-color: rgb(8, 70, 8);
     color: white;
@@ -60,10 +11,6 @@ button:hover {
     background-color: rgb(11, 88, 11);
 }
 
-h1 {
-    font-weight: bold;
-    font-size: 150%;
-}
 
 section{
     margin-top: 2rem;
@@ -87,7 +34,7 @@ section{
 
 
 .author:hover, .location:hover{
-    background-color: rgb(8, 70, 8);
+    background-color: whitesmoke;
 }
 
 .right div{
@@ -117,10 +64,9 @@ section{
     position: relative;
     background-color: #fff;
     margin: 15% auto;
-    padding:20px;
-    border-radius: 8px;
+    padding:1%;
+    border-radius: 0.5rem;
     width:90%;
-    max-width:500px;
     animation: modalSlide 0.3s ease-out;
 }
 
@@ -137,22 +83,22 @@ section{
 
 .close-modal{
     position: absolute;
-    right:20px;
-    top: 10px;
-    font-size: 24px;
+    right:1rem;
+    top: 0.5rem;
+    font-size: 3rem;
     cursor: pointer;
     color: #666;
 }
 
 .star-rating{
     display: inline-flex;
-    gap: 5px;
-    padding: 10px 0;
+    gap: 1%;
+    padding: 1% 0;
 }
 
 .star{
     color: #ddd;
-    font-size: 24px;
+    font-size: 1rem;
     cursor: pointer;
 }
 
@@ -163,32 +109,32 @@ section{
 .review-form{
     display: flex;
     flex-direction: column;
-    gap:15px;
+    gap:1%;
 }
 
 .review-form label{
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 1%;
 }
 
 .review-form textarea{
-    width:100px;
-    min-height:100px;
-    padding:10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    width: 90%;
+    min-height:30%;
+    padding:1%;
+    border: 0.1rem solid #ddd;
+    border-radius: 1%;
     resize:vertical;
 }
 
 .modal-buttons{
     display: flex;
-    gap:10px;
+    gap:2%;
     justify-content: flex-end;
-    margin-top: 20px;
+    margin-top: 5%;
 }
 
 .modal-buttons button{
-    padding:8px 16px;
+    padding:1% 2%;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -211,11 +157,9 @@ section{
 
 /* Tablet Media Query */
 @media screen and (max-width: 768px) {
-    html {
-        font-size: 1.21vw;
-    }
-    section div{
-        max-width: 100%;
+    section{
+        font-size: 200%;
+        grid-template-columns: 1fr;
     }
 
     .left div{
@@ -226,66 +170,13 @@ section{
         max-width: 100%;
     }
 
-    .topnav .bar{
-        display: none;
-    }
-
-    .topnav {
-        display: grid;
-        grid-template-columns: 5fr 1fr;
-
-    }
-
-    .topnav .view-more {
-        background-color: white;
-        color: black;
-        display: inline;
-        float: right;
-        border: none;
-        max-height: 100%;
-
-    }
-    
-    .topnav .view-more:hover{
-        cursor: pointer; 
-    }
-
-    section{
-        grid-template-columns: 1fr;
-    }
-
-
 }
 
 /* Mobile Media Query */
 @media screen and (max-width: 480px) {
-    html {
-        font-size: 1.06vw;
+    section{
+        font-size: 200%;
+        grid-template-columns: 1fr;
     }
-    
-    .topnav .bar{
-        display: none;
-    }
-
-    .topnav {
-        display: grid;
-        grid-template-columns: 5fr 1fr;
-
-    }
-
-    .topnav .view-more {
-        background-color: white;
-        color: black;
-        display: inline;
-        float: right;
-        border: none;
-        max-height: 100%;
-
-    }
-
-    .topnav .view-more:hover{
-        cursor: pointer; 
-    }
-
 
 }
