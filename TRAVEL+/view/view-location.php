@@ -11,6 +11,7 @@ include '../functions/locationdetails.php';
     <title><?php echo htmlspecialchars($locationDetails['location_name']); ?></title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/location-style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
 </head>
 <body>
 <header>
@@ -26,7 +27,7 @@ include '../functions/locationdetails.php';
         <div class="rating">
             Average Rating: <span><?php echo htmlspecialchars($locationDetails['average_rating'] ?? 'N/A'); ?></span>
         </div>
-        <button name="add-to-wishlist" class="wishlist">Add to Wishlist</button>
+        <button name="add-to-wishlist" class="wishlist" id="addToWishlistBtn">Add to Wishlist</button>
         <button class="blog">See Blog Posts Mentioning This Location</button>
     </div>
 
@@ -73,25 +74,27 @@ include '../functions/locationdetails.php';
 
 <script src="../assets/js/review.js"></script>
 <script>document.getElementById('addToWishlistBtn').addEventListener('click', function() {
-    
+    // Get the location_id from the PHP variable (set in your HTML via PHP)
     var locationId = <?php echo json_encode($locationDetails['location_id']); ?>;
-
     
+    if (!locationId) {
+        alert("Location ID is not available.");
+        return;
+    }
+
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "../functions/addtowishlist.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    
-    // Handle the response
+
     xhr.onload = function() {
         if (xhr.status == 200) {
-            alert(xhr.responseText); 
-            
+            alert(xhr.responseText); // Show the response from the server (success or error)
         }
     };
-    
-    
-    xhr.send("location_id=" + locationId);
+
+    xhr.send("location_id=" + locationId); // Send location ID to PHP backend
 });
 </script>
+
 </body>
 </html>
