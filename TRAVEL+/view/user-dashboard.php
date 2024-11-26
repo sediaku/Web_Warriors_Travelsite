@@ -17,7 +17,7 @@ if ($userRole != 1) {
 // Fetch blogs and generate tokens
 $blogsQuery = "
     SELECT blog_id, title, published_date 
-    FROM blogs 
+    FROM blog
     WHERE user_id = ? 
     ORDER BY published_date DESC";
 $blogsStmt = $dbConnection->prepare($blogsQuery);
@@ -114,7 +114,6 @@ $_SESSION['review_tokens'] = $reviewTokens; // Store tokens in session
                     <th>Date</th>
                     <th>Likes</th>
                     <th>Comments</th>
-                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -126,9 +125,6 @@ $_SESSION['review_tokens'] = $reviewTokens; // Store tokens in session
                         <td><?php echo htmlspecialchars($review['review_date']); ?></td>
                         <td><?php echo htmlspecialchars($review['likes']); ?></td>
                         <td><?php echo htmlspecialchars($review['comments']); ?></td>
-                        <td>
-                            <a href="view-review.php?token=<?php echo urlencode($token); ?>">View</a>
-                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
