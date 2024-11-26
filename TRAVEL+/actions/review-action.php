@@ -9,13 +9,8 @@ header('Content-Type: application/json');
 
 // Function to send error response
 function sendErrorResponse($message, $code = 400) {
-    // Ensure no previous output
     ob_clean(); 
-    
-    // Set HTTP response code
     http_response_code($code);
-    
-    // Ensure JSON response
     echo json_encode([
         'success' => false, 
         'error' => $message
@@ -73,36 +68,49 @@ try {
     $stmt->bind_param("iiss", $user_id, $location_id, $rating, $review_text);
     $stmt->execute();
 
+    // Get the ID of the newly inserted review
+    $new_review_id = $stmt->insert_id;
+
     // Check for insertion error
     if ($stmt->error){
         throw new Exception("Review insertion failed: ". $stmt->error);
     }
     $stmt->close();
 
-    // Update average rating
+    // Calculate new average rating
     $avg_stmt = $conn->prepare("
-        UPDATE locations
-        SET average_rating = (
-            SELECT AVG(rating)
-            FROM reviews
-            WHERE location_id = ?
-        )
+        SELECT AVG(rating) as new_average 
+        FROM reviews 
         WHERE location_id = ?
     ");
-    $avg_stmt->bind_param("ii", $location_id, $location_id);
+    $avg_stmt->bind_param("i", $location_id);
     $avg_stmt->execute();
-
-    // Check for average rating update error
-    if ($avg_stmt->error){
-        throw new Exception("Average rating update failed: ".$avg_stmt->error);
-    }
+    $avg_result = $avg_stmt->get_result();
+    $avg_row = $avg_result->fetch_assoc();
+    $new_average_rating = $avg_row['new_average'];
     $avg_stmt->close();
+
+    // Update locations table with new average rating
+    $update_stmt = $conn->prepare("
+        UPDATE locations 
+        SET average_rating = ? 
+        WHERE location_id = ?
+    ");
+    $update_stmt->bind_param("di", $new_average_rating, $location_id);
+    $update_stmt->execute();
+    $update_stmt->close();
 
     // Commit transaction
     $conn->commit();
 
-    // Send success response
-    echo json_encode(['success' => true, 'message' => 'Review submitted successfully']);
+    // Send success response with new review details
+    echo json_encode([
+        'success' => true, 
+        'message' => 'Review submitted successfully',
+        'review_id' => $new_review_id,
+        'username' => $_SESSION['username'], 
+        'new_average_rating' => (float)$new_average_rating
+    ]);
 }
 catch (Exception $e){
     // Rollback transaction on error

@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const reviewForm = document.getElementById('reviewForm');
     const stars = document.querySelectorAll('.star');
     const reviewText = document.getElementById('reviewText');
+    const reviewsContainer = document.getElementById('reviewsContainer');
     
     // Get location ID from the page
     const locationId = addReviewBtn.getAttribute('data-location-id');
@@ -96,9 +97,7 @@ document.addEventListener('DOMContentLoaded', function(){
             body: JSON.stringify(review)
         })
         .then(response => {
-            // Check if response is OK
             if (!response.ok) {
-                // Try to parse error message from JSON
                 return response.json().then(errorData => {
                     throw new Error(errorData.error || 'Unknown error occurred');
                 });
@@ -107,10 +106,62 @@ document.addEventListener('DOMContentLoaded', function(){
         })
         .then(data => {
             if (data.success) {
+                // Remove "No reviews" message if it exists
+                const noReviewsMsg = document.querySelector('.no-reviews');
+                if (noReviewsMsg) {
+                    noReviewsMsg.remove();
+                }
+
+                // Create new review element
+                const newReview = document.createElement('div');
+                newReview.classList.add('review-item');
+                newReview.setAttribute('data-review-id', data.review_id);
+
+                // Generate star rating HTML
+                const starRating = Array.from({length: 5}, (_, i) => 
+                    i < currentRating ? '&#9733;' : '&#9734;'
+                ).join('');
+
+                // Set inner HTML for new review
+                newReview.innerHTML = `
+                    <div class="review-header">
+                        <img src="../assets/images/default-profile.png" alt="Profile" class="reviewer-profile">
+                        <div class="reviewer-info">
+                            <span class="reviewer-name">${data.username}</span>
+                            <div class="review-rating">
+                                ${starRating}
+                            </div>
+                        </div>
+                        <span class="review-date">${new Date().toLocaleDateString('en-US', { 
+                            year: 'numeric', 
+                            month: 'long', 
+                            day: 'numeric' 
+                        })}</span>
+                    </div>
+                    <div class="review-content">
+                        ${review.text}
+                    </div>
+                `;
+
+                // Insert new review at the top of reviews container
+                if (reviewsContainer.firstChild) {
+                    reviewsContainer.insertBefore(newReview, reviewsContainer.firstChild);
+                } else {
+                    reviewsContainer.appendChild(newReview);
+                }
+
+                // Update average rating 
+                // Update average rating 
+                const averageRatingElement = document.querySelector('.rating span');
+                if (averageRatingElement && data.new_average_rating !== undefined) {
+                    const newAverageRating = parseFloat(data.new_average_rating);
+                    if (!isNaN(newAverageRating)) {
+                        averageRatingElement.textContent = newAverageRating.toFixed(1);
+                    }
+                }
+                // Close modal and reset form
                 alert('Review submitted successfully!');
                 closeModal();
-                // Optionally, you could refresh reviews or update page
-                location.reload();
             } else {
                 throw new Error(data.error || 'Unknown error');
             }

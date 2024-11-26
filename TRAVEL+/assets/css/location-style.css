@@ -210,3 +210,90 @@ section{
     }
 
 }
+
+.review-section {
+    background-color: var(--background-color);
+    padding: 2rem;
+    border-radius: 12px;
+}
+
+.review-section h1 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
+
+.review-item {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--card-shadow);
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.reviewer-profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 1rem;
+    object-fit: cover;
+}
+
+.reviewer-info {
+    flex-grow: 1;
+}
+
+.reviewer-name {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.review-rating {
+    color: var(--secondary-color);
+    margin-top: 0.5rem;
+}
+
+.review-date {
+    color: #777;
+    font-size: 0.9rem;
+}
+
+.review-content {
+    line-height: 1.6;
+}
+
+.add-review-btn {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-review-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .location-view {
+        flex-direction: column;
+    }
+}
+
+/* Star Rating Styling */
+.review-rating .star {
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+}
