@@ -41,35 +41,34 @@ include '../functions/locationdetails.php';
             <div class="reviews"></div>
             <button class="add-review-btn" data-location-id="<?php echo $locationDetails['location_id']; ?>">Add Review</button>
         </div>
+    </div>
 
-            
-            <div id="reviewModal" class="modal">
-                <div class="modal-content">
-                    <span class="close-modal">&times;</span>
-                    <h2>Write a Review!</h2>
-                    <form class="review-form" id="reviewForm">
-                        <div>
-                            <label>Rating</label>
-                            <div class="star-rating" id="starRating">
-                                <span class="star" data-rating="1">&#9734</span>
-                                <span class="star" data-rating="2">&#9734</span>
-                                <span class="star" data-rating="3">&#9734</span>
-                                <span class="star" data-rating="4">&#9734</span>
-                                <span class="star" data-rating="5">&#9734</span>
-                            </div>
-                        </div>
-                        <div>
-                            <label for="reviewText">Your Review</label><br>
-                            <textarea id="reviewText" placeholder="Share Your Experience..." required></textarea>
-                        </div>
-                        <div class="modal-buttons">
-                            <button type="button" class="cancel-review">Cancel</button>
-                            <button type="submit" class="submit-review" disabled>Submit Review</button>
-                        </div>
-                    </form>
+    <div id="reviewModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Write a Review!</h2>
+            <form class="review-form" id="reviewForm">
+                <div>
+                    <label>Rating</label>
+                    <div class="star-rating" id="starRating">
+                        <span class="star" data-rating="1">&#9734</span>
+                        <span class="star" data-rating="2">&#9734</span>
+                        <span class="star" data-rating="3">&#9734</span>
+                        <span class="star" data-rating="4">&#9734</span>
+                        <span class="star" data-rating="5">&#9734</span>
+                    </div>
                 </div>
-            </div>
+                <div>
+                    <label for="reviewText">Your Review</label><br>
+                    <textarea id="reviewText" placeholder="Share Your Experience..." required></textarea>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="cancel-review">Cancel</button>
+                    <button type="submit" class="submit-review" disabled>Submit Review</button>
+                </div>
+            </form>
         </div>
+    </div>
 </section>
 
 <script src="../assets/js/review.js"></script>
