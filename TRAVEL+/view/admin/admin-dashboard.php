@@ -4,8 +4,19 @@ $dbConnection = getDatabaseConnection();
 session_start();
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 2) {
-    die("You do not have permission to access this page.");
+    
 }
+
+if (!isset($_SESSION['user_id'])) {
+    if (!$_SESSION['role'] === 'admin'){// if user is normal
+        header('Location: ../all-locations.php');
+    }
+}
+else{ //if user is guest
+    header('Location: ../login.php');
+    exit;
+}
+
 
 $userId = $_SESSION['user_id'];
 
