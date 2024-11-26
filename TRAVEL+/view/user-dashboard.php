@@ -102,7 +102,14 @@ $reviewsResult = $reviewsStmt->get_result();
     } else {
         echo "<p>You have no blogs.</p>";
     }
+
+    
     ?>
+    <!-- Add Blog Button -->
+    <div class="add-blog-button">
+        <a href="add-blog.php" class="add-blog-link">Add New Blog</a>
+    </div>
+
 
     <!-- Reviews Section -->
     <?php
