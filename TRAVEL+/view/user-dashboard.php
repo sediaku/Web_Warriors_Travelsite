@@ -51,6 +51,7 @@ $reviewsResult = $reviewsStmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard</title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css//user-dashboard-style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
 </head>
 <body>
@@ -62,69 +63,91 @@ $reviewsResult = $reviewsStmt->get_result();
     <h1>Welcome to Your Dashboard</h1>
 
     <!-- Blogs Section -->
-    <?php if ($blogsResult->num_rows > 0): ?>
-        <h2>Your Blogs</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Published Date</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($blog = $blogsResult->fetch_assoc()): ?>
+    <?php
+    if ($blogsResult->num_rows > 0) {
+        echo "<h2>Your Blogs</h2>";
+        echo "<table class='dashboard-table'>
+                <thead>
                     <tr>
-                        <td><?php echo htmlspecialchars($blog['title']); ?></td>
-                        <td><?php echo htmlspecialchars($blog['published_date']); ?></td>
-                        <td>
-                            <a href="view-blog-post.php?blog_id=<?php echo htmlspecialchars($blog['blog_id']); ?>">View</a>
-                            <form action="../functions/delete-blog.php" method="POST" style="display:inline;">
-                                <input type="hidden" name="blog_id" value="<?php echo htmlspecialchars($blog['blog_id']); ?>">
-                                <button type="submit" onclick="return confirm('Are you sure you want to delete this blog?');">Delete</button>
-                            </form>
-                        </td>
+                        <th>Title</th>
+                        <th>Published Date</th>
+                        <th>Actions</th>
                     </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
-    <?php else: ?>
-        <p>You have no blogs.</p>
-    <?php endif; ?>
+                </thead>
+                <tbody>";
+
+        while ($blog = $blogsResult->fetch_assoc()) {
+            $blogId = $blog['blog_id'];
+            $title = htmlspecialchars($blog['title']);
+            $publishedDate = htmlspecialchars($blog['published_date']);
+
+            echo "<tr>
+                    <td>{$title}</td>
+                    <td>{$publishedDate}</td>
+                    <td>
+                        <a href='view-blog-post.php?blog_id={$blogId}'>
+                            <span class='material-symbols-outlined'>visibility</span>
+                        </a>
+                        <form action='../functions/delete-blog.php' method='POST' style='display:inline;'>
+                            <input type='hidden' name='blog_id' value='{$blogId}'>
+                            <button type='submit' onclick=\"return confirm('Are you sure you want to delete this blog?');\">
+                                <span class='material-symbols-outlined'>delete</span>
+                            </button>
+                        </form>
+                    </td>
+                </tr>";
+        }
+
+        echo "</tbody></table>";
+    } else {
+        echo "<p>You have no blogs.</p>";
+    }
+    ?>
 
     <!-- Reviews Section -->
-    <?php if ($reviewsResult->num_rows > 0): ?>
-        <h2>Your Reviews</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Location</th>
-                    <th>Rating</th>
-                    <th>Review</th>
-                    <th>Date</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($review = $reviewsResult->fetch_assoc()): ?>
+    <?php
+    if ($reviewsResult->num_rows > 0) {
+        echo "<h2>Your Reviews</h2>";
+        echo "<table class='dashboard-table'>
+                <thead>
                     <tr>
-                        <td><?php echo htmlspecialchars($review['location_name']); ?></td>
-                        <td><?php echo htmlspecialchars($review['rating']); ?>/5</td>
-                        <td><?php echo htmlspecialchars($review['review_text']); ?></td>
-                        <td><?php echo htmlspecialchars($review['review_date']); ?></td>
-                        <td>
-                            <form action="../functions/delete-review.php" method="POST" style="display:inline;">
-                                <input type="hidden" name="review_id" value="<?php echo htmlspecialchars($review['review_id']); ?>">
-                                <button type="submit" onclick="return confirm('Are you sure you want to delete this review?');">Delete</button>
-                            </form>
-                        </td>
+                        <th>Location</th>
+                        <th>Rating</th>
+                        <th>Review</th>
+                        <th>Date</th>
+                        <th>Actions</th>
                     </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
-    <?php else: ?>
-        <p>You have no reviews.</p>
-    <?php endif; ?>
+                </thead>
+                <tbody>";
+
+        while ($review = $reviewsResult->fetch_assoc()) {
+            $reviewId = $review['review_id'];
+            $locationName = htmlspecialchars($review['location_name']);
+            $rating = htmlspecialchars($review['rating']);
+            $reviewText = htmlspecialchars($review['review_text']);
+            $reviewDate = htmlspecialchars($review['review_date']);
+
+            echo "<tr>
+                    <td>{$locationName}</td>
+                    <td>{$rating}/5</td>
+                    <td>{$reviewText}</td>
+                    <td>{$reviewDate}</td>
+                    <td>
+                        <form action='../functions/delete-review.php' method='POST' style='display:inline;'>
+                            <input type='hidden' name='review_id' value='{$reviewId}'>
+                            <button type='submit' onclick=\"return confirm('Are you sure you want to delete this review?');\">
+                                <span class='material-symbols-outlined'>delete</span>
+                            </button>
+                        </form>
+                    </td>
+                </tr>";
+        }
+
+        echo "</tbody></table>";
+    } else {
+        echo "<p>You have no reviews.</p>";
+    }
+    ?>
 
     <?php
     $blogsStmt->close();
@@ -132,9 +155,10 @@ $reviewsResult = $reviewsStmt->get_result();
     $dbConnection->close();
     ?>
 </main>
+
 <footer>
     <?php include 'footer.php'; ?>
 </footer>
+
 </body>
 </html>
-

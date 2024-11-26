@@ -73,11 +73,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
 
     if ($updateStmt->execute()) {
-        echo "Location updated successfully!";
-        header("Location:admin/location-management.php");
+        echo "<p>Location updated successfully!</p>";
+        header("Location: admin/location-management.php");
         exit;
     } else {
-        echo "Failed to update location.";
+        echo "<p>Failed to update location.</p>";
     }
 }
 
@@ -91,12 +91,13 @@ $dbConnection->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Location</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
 <header>
     <?php include 'admin/admin-navbar.php'; ?>
 </header>
+
 <main>
     <h1>Edit Location</h1>
     <form method="POST">
@@ -121,9 +122,6 @@ $dbConnection->close();
         <label for="opening_hours">Opening Hours:</label>
         <input type="text" id="opening_hours" name="opening_hours" value="<?php echo htmlspecialchars($location['opening_hours']); ?>" required>
 
-        <label for="booking_allowed">Booking Allowed:</label>
-        <input type="checkbox" id="booking_allowed" name="booking_allowed" <?php echo $location['booking_allowed'] ? 'checked' : ''; ?>>
-
         <label for="contact_info">Contact Info:</label>
         <input type="text" id="contact_info" name="contact_info" value="<?php echo htmlspecialchars($location['contact_info']); ?>" required>
 
@@ -136,5 +134,10 @@ $dbConnection->close();
         <button type="submit">Save Changes</button>
     </form>
 </main>
+
+<footer>
+    <?php include 'footer.php'; ?>
+</footer>
+
 </body>
 </html>
