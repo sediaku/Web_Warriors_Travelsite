@@ -34,8 +34,6 @@ $reviewsQuery = "
         reviews.review_text,
         reviews.rating,
         reviews.review_date,
-        reviews.likes,
-        reviews.comments,
         locations.location_name 
     FROM reviews 
     INNER JOIN locations ON reviews.location_id = locations.location_id 
