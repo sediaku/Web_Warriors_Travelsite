@@ -1,63 +1,65 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const viewMoreBtn = document.getElementById('viewMoreBtn');
-    const mainNav = document.getElementById('mainNav');
-    const accountBtn = document.getElementById('accountBtn');
-    const accountDropdown = document.getElementById('accountDropdown');
+    // Function to create and set up dropdowns and modals
+    function setupNavbarInteractivity() {
+        const accountContainer = document.querySelector('.account-container');
+        
+        // If no account container, exit
+        if (!accountContainer) return;
 
-    // Create View More Modal
-    const viewMoreModal = document.createElement('div');
-    viewMoreModal.classList.add('nav-modal');
-    viewMoreModal.id = 'viewMoreModal';
+        const accountBtn = accountContainer.querySelector('.account');
+        const accountDropdown = accountContainer.querySelector('.account-dropdown');
+        const viewMoreBtn = document.getElementById('viewMoreBtn');
 
-    // Clone navigation links to modal
-    const navLinks = mainNav.querySelectorAll('a');
-    navLinks.forEach(link => {
-        const modalLink = link.cloneNode(true);
-        viewMoreModal.appendChild(modalLink);
-    });
+        // Exit if critical elements are missing
+        if (!accountBtn || !accountDropdown) return;
 
-    // Create Account Modal
-    const accountModal = document.createElement('div');
-    accountModal.classList.add('account-modal');
-    accountModal.id = 'accountModal';
-
-    // Create account modal links
-    const loginLink = document.createElement('a');
-    loginLink.href = 'view/login.php';
-    loginLink.textContent = 'Login';
-
-    const signupLink = document.createElement('a');
-    signupLink.href = 'view/signup.php';
-    signupLink.textContent = 'Sign Up';
-
-    accountModal.appendChild(loginLink);
-    accountModal.appendChild(signupLink);
-
-    // Append modals to body
-    document.body.appendChild(viewMoreModal);
-    document.body.appendChild(accountModal);
-
-    // View More Button Toggle
-    viewMoreBtn.addEventListener('click', function(event) {
-        event.stopPropagation();
-        viewMoreModal.classList.toggle('show');
-        accountModal.classList.remove('show');
-    });
-
-    // Account Button Toggle
-    accountBtn.addEventListener('click', function(event) {
-        event.stopPropagation();
-        accountModal.classList.toggle('show');
-        viewMoreModal.classList.remove('show');
-    });
-
-    // Close modals when clicking outside
-    window.addEventListener('click', function(event) {
-        if (!accountBtn.contains(event.target)) {
-            accountModal.classList.remove('show');
+        // Close dropdowns when clicking outside
+        function closeDropdowns(event) {
+            if (accountDropdown && 
+                !accountContainer.contains(event.target)) {
+                accountDropdown.classList.remove('show');
+            }
         }
-        if (!viewMoreBtn.contains(event.target)) {
-            viewMoreModal.classList.remove('show');
+
+        // Remove any existing listeners to prevent duplicates
+        document.removeEventListener('click', closeDropdowns);
+        document.addEventListener('click', closeDropdowns);
+
+        // Toggle account dropdown
+        accountBtn.addEventListener('click', function(event) {
+            event.stopPropagation();
+            accountDropdown.classList.toggle('show');
+        });
+
+        // View More Button (if exists)
+        if (viewMoreBtn) {
+            viewMoreBtn.addEventListener('click', function(event) {
+                const navModal = document.querySelector('.nav-modal');
+                if (navModal) {
+                    event.stopPropagation();
+                    navModal.classList.toggle('show');
+                }
+            });
         }
-    });
+    }
+
+    // Initial setup
+    setupNavbarInteractivity();
+
+    // Optional: Re-run setup for dynamically loaded content
+    // Useful if navbar is included via PHP
+    if (typeof MutationObserver !== 'undefined') {
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.addedNodes.length) {
+                    setupNavbarInteractivity();
+                }
+            });
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    }
 });
