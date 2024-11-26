@@ -3,49 +3,83 @@ session_start();
 require_once '../db/db-config.php';
 
 error_reporting(E_ALL);
-ini_set('display_errors',1);
+ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
 
+// Function to send error response
+function sendErrorResponse($message, $code = 400) {
+    // Ensure no previous output
+    ob_clean(); 
+    
+    // Set HTTP response code
+    http_response_code($code);
+    
+    // Ensure JSON response
+    echo json_encode([
+        'success' => false, 
+        'error' => $message
+    ]);
+    exit;
+}
+
+// Check if user is logged in
 if (!isset($_SESSION['user_id'])){
-    http_response_code(401);
-    echo json_encode(['error' => 'User not logged in']);
-    exit;
+    sendErrorResponse('User not logged in', 401);
 }
 
-$data = json_decode(file_get_contents('php://input'), true);
+// Get raw POST data
+$rawInput = file_get_contents('php://input');
+$data = json_decode($rawInput, true);
 
+// Validate input
+if (!$data) {
+    sendErrorResponse('Invalid JSON input');
+}
+
+// Check required fields
 if (!isset($data['location_id']) || !isset($data['rating']) || !isset($data['text'])){
-    http_response_code(400);
-    echo json_encode(['error' => 'Missing required fields']);
-    exit;
+    sendErrorResponse('Missing required fields');
 }
 
+// Sanitize and validate inputs
 $user_id = $_SESSION['user_id'];
-$location_id = intval($data['location_id']);
-$rating = intval($data['rating']);
-$review_text = $data['text'];
+$location_id = filter_var($data['location_id'], FILTER_VALIDATE_INT);
+$rating = filter_var($data['rating'], FILTER_VALIDATE_INT);
+$review_text = trim($data['text']);
+
+// Additional validation
+if ($location_id === false || $rating === false){
+    sendErrorResponse('Invalid location or rating');
+}
 
 if ($rating < 1 || $rating > 5){
-    http_response_code(400);
-    echo json_encode(['error' => 'Invalid rating']);
-    exit;
+    sendErrorResponse('Rating must be between 1 and 5');
 }
 
+if (empty($review_text)){
+    sendErrorResponse('Review text cannot be empty');
+}
+
+// Get database connection
 $conn = getDatabaseConnection();
 
-try{
+try {
+    // Start transaction
     $conn->begin_transaction();
 
-    $stmt = $conn->prepare("INSERT INTO reviews (user_id, location_id, rating, review_text) VALUES (?,?,?,?)");
+    // Prepare and execute review insertion
+    $stmt = $conn->prepare("INSERT INTO reviews (user_id, location_id, rating, review_text) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("iiss", $user_id, $location_id, $rating, $review_text);
     $stmt->execute();
 
+    // Check for insertion error
     if ($stmt->error){
         throw new Exception("Review insertion failed: ". $stmt->error);
     }
     $stmt->close();
 
+    // Update average rating
     $avg_stmt = $conn->prepare("
         UPDATE locations
         SET average_rating = (
@@ -58,22 +92,27 @@ try{
     $avg_stmt->bind_param("ii", $location_id, $location_id);
     $avg_stmt->execute();
 
+    // Check for average rating update error
     if ($avg_stmt->error){
         throw new Exception("Average rating update failed: ".$avg_stmt->error);
     }
     $avg_stmt->close();
 
+    // Commit transaction
     $conn->commit();
 
+    // Send success response
     echo json_encode(['success' => true, 'message' => 'Review submitted successfully']);
 }
 catch (Exception $e){
+    // Rollback transaction on error
     $conn->rollBack();
 
-    http_response_code(500);
-    echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
+    // Send error response
+    sendErrorResponse('Database error: ' . $e->getMessage(), 500);
 }
-finally{
+finally {
+    // Close database connection
     $conn->close();
 }
 ?>

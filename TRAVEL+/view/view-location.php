@@ -39,7 +39,7 @@ include '../functions/locationdetails.php';
         <div class="review-section">
             <h1>Reviews</h1>
             <div class="reviews"></div>
-            <button class="add-review-btn">Add Review</button>
+            <button class="add-review-btn" data-location-id="<?php echo $locationDetails['location_id']; ?>">Add Review</button>
         </div>
 
             

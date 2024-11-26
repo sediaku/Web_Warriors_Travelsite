@@ -7,8 +7,9 @@ document.addEventListener('DOMContentLoaded', function(){
     const reviewForm = document.getElementById('reviewForm');
     const stars = document.querySelectorAll('.star');
     const reviewText = document.getElementById('reviewText');
-
-    const locationId = new URLSearchParams(window.location.search).get('id');
+    
+    // Get location ID from the page
+    const locationId = addReviewBtn.getAttribute('data-location-id');
 
     let currentRating = 0;
 
@@ -22,14 +23,17 @@ document.addEventListener('DOMContentLoaded', function(){
         document.body.style.overflow = 'auto';
         reviewForm.reset();
         currentRating = 0;
-        stars.forEach(star => star.classList.remove('active'));
+        stars.forEach(star => {
+            star.innerHTML = '&#9734;';
+            star.classList.remove('active');
+        });
         submitBtn.disabled = true;
     }
 
     closeBtn.addEventListener('click', closeModal);
-    cancelBtn.addEventListener('click',closeModal);
+    cancelBtn.addEventListener('click', closeModal);
 
-    window.addEventListener('click',function(event){
+    window.addEventListener('click', function(event){
         if (event.target == modal){
             closeModal();
         }
@@ -53,7 +57,13 @@ document.addEventListener('DOMContentLoaded', function(){
     function highlightStars(rating){
         stars.forEach(star => {
             const starRating = star.dataset.rating;
-            star.classList.toggle('active', starRating <= rating);
+            if (starRating <= rating) {
+                star.innerHTML = '&#9733;'; // Filled star
+                star.classList.add('active');
+            } else {
+                star.innerHTML = '&#9734;'; // Empty star
+                star.classList.remove('active');
+            }
         });
     }
 
@@ -66,40 +76,50 @@ document.addEventListener('DOMContentLoaded', function(){
 
     reviewForm.addEventListener('submit', function(e){
         e.preventDefault();
-
+        
+        // Disable submit button to prevent multiple submissions
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Submitting...';
-
+        
+        // Prepare review data
         const review = {
             location_id: locationId,
             rating: currentRating,
             text: reviewText.value.trim()
         };
 
-        fetch('review-action.php',{
+        // Send review to server
+        fetch('../actions/review-action.php', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(review)
         })
-        .then(response => response.json())
-        .then(data =>{
-            if (data.success){
-                alert('Review submitted successfuly!');
-                closeModal();
+        .then(response => {
+            // Check if response is OK
+            if (!response.ok) {
+                // Try to parse error message from JSON
+                return response.json().then(errorData => {
+                    throw new Error(errorData.error || 'Unknown error occurred');
+                });
             }
-            else{
-                alert('Error: ' + data.error);
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                alert('Review submitted successfully!');
+                closeModal();
+                // Optionally, you could refresh reviews or update page
+                location.reload();
+            } else {
+                throw new Error(data.error || 'Unknown error');
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('An error occured while submitting the review');
-        })
-        .finally(() =>{
+            alert('Error: ' + error.message);
+            // Re-enable submit button
             submitBtn.disabled = false;
-            submitBtn.textContent = 'Submit Review';
         });
     });
 });

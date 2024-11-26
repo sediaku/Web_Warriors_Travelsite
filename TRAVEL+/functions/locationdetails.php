@@ -13,7 +13,7 @@ if (!$locationId || !is_numeric($locationId)) {
 
 
 $locationQuery = "
-    SELECT location_name, booking_link, description
+    SELECT location_id,location_name, booking_link, description
     FROM locations
     WHERE location_id = ?
 ";
