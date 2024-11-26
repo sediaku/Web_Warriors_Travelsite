@@ -110,11 +110,7 @@ $topUsersResult = $dbConnection->query($topUsersQuery);
                     <ul>
                         <?php while ($blog = $userBlogsResult->fetch_assoc()): ?>
                             <li>
-                                <?php
-                                $blogToken = bin2hex(random_bytes(16));
-                                $_SESSION['blog_tokens'][$blogToken] = $blog['blog_id'];
-                                ?>
-                                <a href="../view-blog-post.php?token=<?php echo urlencode($blogToken); ?>">
+                                <a href="../view-blog-post.php?blog_id=<?php echo $blog['blog_id']; ?>">
                                     <?php echo htmlspecialchars($blog['title']); ?>
                                 </a> - <?php echo htmlspecialchars($blog['published_date']); ?>
                             </li>
@@ -170,3 +166,4 @@ $topUsersResult = $dbConnection->query($topUsersQuery);
 <script src="../../assets/js/admin-navbar.js"></script>
 </body>
 </html>
+
