@@ -104,8 +104,6 @@ $reviewsResult = $reviewsStmt->get_result();
                     <th>Rating</th>
                     <th>Review</th>
                     <th>Date</th>
-                    <th>Likes</th>
-                    <th>Comments</th>
                     <th>Actions</th>
                 </tr>
             </thead>
