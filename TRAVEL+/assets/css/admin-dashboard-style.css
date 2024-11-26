@@ -36,6 +36,11 @@ section div{
     padding: 2%;
 }
 
+.stats div p{
+    margin: 1%;
+    text-align: center;
+}
+
 .stats div:hover{
     background-color: whitesmoke;
 }
