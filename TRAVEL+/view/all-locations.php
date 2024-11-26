@@ -29,7 +29,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard</title>
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/location-style.css">
+    <link rel="stylesheet" href="../assets/css/all-locations-style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
 </head>
 <body>
@@ -61,7 +61,7 @@ try {
         </div>
     </section>
 
-    <script src="../assets/js/navbar-in.js"></script>
+
     <script>
         // Add location to wishlist functionality
         document.querySelectorAll('.wishlist-btn').forEach(button => {

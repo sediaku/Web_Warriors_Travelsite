@@ -26,3 +26,5 @@
         </button>
     </div>
 </div>
+
+<script src ="..\assets\js\navbar-in.js"></script>

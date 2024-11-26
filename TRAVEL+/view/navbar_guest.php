@@ -25,3 +25,5 @@
         </button>
     </div>
 </div>
+
+<script src ="..\assets\js\navbar-guest.js"></script>

@@ -8,8 +8,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 2) {
     die("Access denied. You do not have permission to view this page.");
 }
 
-
-
 // Fetch the location ID
 $locationId = isset($_GET['location_id']) ? intval($_GET['location_id']) : 0;
 if ($locationId <= 0) {

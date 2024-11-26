@@ -141,7 +141,6 @@ $reviewsResult = $reviewsStmt->get_result();
 <footer>
     <?php include 'footer.php'; ?>
 </footer>
-<script src="../assets/js/navbar-in.js"></script>
 </body>
 </html>
 
