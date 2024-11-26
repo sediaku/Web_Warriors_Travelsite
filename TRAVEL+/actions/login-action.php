@@ -32,11 +32,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Redirect based on user role
             if ($user['role'] == 1) {
-                header("Location:../view/user-dashboard.php");
-            } elseif ($user['role'] == 2) {
-                header("Location:../view/admin/admin-dashboard.php");
+                header("Location: ../view/user-dashboard.php");
+                exit;
+            }else{
+                header("Location: ../view/admin/admin-dashboard.php");
+                exit;
+
             }
-            exit;
+            
         } else {
             echo "Invalid username or password.";
         }

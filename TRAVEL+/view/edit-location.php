@@ -92,6 +92,7 @@ $dbConnection->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Location</title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/edit-location.css">
 </head>
 <body>
 <header>
