@@ -1,0 +1,74 @@
+/* General Table Styles */
+.manage-users table {
+    margin-left: 2.5%;
+    width: 95%;
+    border-top: 0.1rem solid rgb(11, 88, 11);
+    border-collapse: collapse;
+}
+
+.manage-users a {
+    text-decoration: none;
+    color: rgb(11, 88, 11);
+    margin-right: 2%;
+    width: 8%;
+    height: 100%;
+}
+
+.manage-users button {
+    background: none;
+    border: none;
+    color: red;
+    margin-right: 2%;
+    width: 8%;
+    height: 100%;
+}
+
+.manage-users button:hover {
+    cursor: pointer;
+}
+
+.manage-users td, .manage-users th {
+    border-bottom: 0.1rem solid rgb(11, 88, 11);
+    text-align: left;
+    padding: 1%;
+}
+
+.manage-users tr:nth-child(even) {
+    background-color: rgb(220, 255, 220);
+}
+
+.manage-users tr:hover {
+    background-color: rgb(220, 255, 220);
+}
+
+.manage-users th {
+    background-color: rgb(220, 255, 220);
+    color: black;
+    font-weight: bold;
+}
+
+/* Profile Picture Styles */
+.manage-users td img {
+    border-radius: 50%;
+}
+
+/* Admin Header */
+.manage-users h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Tablet Media Query */
+@media screen and (max-width: 768px) {
+    .manage-users table, h1 {
+        font-size: 200%;
+    }
+}
+
+/* Mobile Media Query */
+@media screen and (max-width: 480px) {
+    .manage-users table, h1 {
+        font-size: 200%;
+    }
+}

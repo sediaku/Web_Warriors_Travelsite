@@ -1,4 +1,4 @@
-<?php
+<<?php
 include '../../db/db-config.php';
 session_start();
 
@@ -24,63 +24,69 @@ $stmt->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Management</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/user-management.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <?php include 'admin-navbar.php'; ?>
-    </header>
+<header>
+    <?php include 'admin-navbar.php'; ?>
+</header>
 
-    <main>
-        <h1>User Management</h1>
+<main class="manage-users">
+    <h1>User Management</h1>
 
-        <?php if ($usersResult->num_rows > 0): ?>
-            <table>
-                <thead>
+    <?php if ($usersResult->num_rows > 0): ?>
+        <table>
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Profile Picture</th>
+                    <th>Date Joined</th>
+                    <th>Last Login</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($user = $usersResult->fetch_assoc()): ?>
                     <tr>
-                        <th>User ID</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Profile Picture</th>
-                        <th>Date Joined</th>
-                        <th>Last Login</th>
-                        <th>Actions</th>
+                        <td><?php echo htmlspecialchars($user['user_id']); ?></td>
+                        <td><?php echo htmlspecialchars($user['username']); ?></td>
+                        <td><?php echo htmlspecialchars($user['email']); ?></td>
+                        <td>
+                            <?php if ($user['profile_picture']): ?>
+                                <img src="<?php echo htmlspecialchars($user['profile_picture']); ?>" alt="Profile Picture" width="50" height="50">
+                            <?php else: ?>
+                                No picture
+                            <?php endif; ?>
+                        </td>
+                        <td><?php echo htmlspecialchars($user['date_joined']); ?></td>
+                        <td><?php echo htmlspecialchars($user['last_login']); ?></td>
+                        <td>
+                            <a href="../view-profile.php?user_id=<?php echo urlencode($user['user_id']); ?>">View Profile</a> | 
+                            <form action="../../functions/delete-user.php" method="POST" style="display:inline;">
+                                <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user['user_id']); ?>">
+                                <button type="submit" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
+                            </form>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php while ($user = $usersResult->fetch_assoc()): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($user['user_id']); ?></td>
-                            <td><?php echo htmlspecialchars($user['username']); ?></td>
-                            <td><?php echo htmlspecialchars($user['email']); ?></td>
-                            <td>
-                                <?php if ($user['profile_picture']): ?>
-                                    <img src="<?php echo htmlspecialchars($user['profile_picture']); ?>" alt="Profile Picture" width="50" height="50">
-                                <?php else: ?>
-                                    No picture
-                                <?php endif; ?>
-                            </td>
-                            <td><?php echo htmlspecialchars($user['date_joined']); ?></td>
-                            <td><?php echo htmlspecialchars($user['last_login']); ?></td>
-                            <td>
-                                <a href="../view-profile.php?user_id=<?php echo urlencode($user['user_id']); ?>">View Profile</a> | 
-                                <form action="../../functions/delete-user.php" method="POST" style="display:inline;">
-                                    <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user['user_id']); ?>">
-                                    <button type="submit" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endwhile; ?>
-                </tbody>
-            </table>
-        <?php else: ?>
-            <p>No users found.</p>
-        <?php endif; ?>
-    </main>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <p>No users found.</p>
+    <?php endif; ?>
+
+</main>
+
+<footer>
+    <?php include '../footer.php'; ?>
+</footer>
+
 </body>
 </html>
 
 <?php
 $dbConnection->close();
 ?>
-
