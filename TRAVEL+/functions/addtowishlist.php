@@ -1,69 +1,50 @@
 <?php
-
-require_once 'db-config.php';
-
-
+include '../db/db-config.php';
 session_start();
 
 
 if (!isset($_SESSION['user_id'])) {
-    http_response_code(403); 
-    echo "Access denied: You must be logged in to perform this action.";
-    exit;
+    die("You must be logged in to add to your wishlist.");
 }
 
 
-$rawData = file_get_contents("php://input");
-$data = json_decode($rawData, true);
+$locationId = $_POST['location_id'] ?? null;
+$userId = $_SESSION['user_id']; 
 
-if (isset($data['location_name'])) {
-    $userId = $_SESSION['user_id']; 
-    $locationName = $data['location_name'];
+// Validate location_id
+if (!$locationId || !is_numeric($locationId)) {
+    die("Invalid location ID.");
+}
 
-    
-    $locationQuery = "SELECT location_id FROM locations WHERE location_name = ?";
-    $stmt = $conn->prepare($locationQuery);
-    $stmt->bind_param("s", $locationName);
-    $stmt->execute();
-    $result = $stmt->get_result();
 
-    if ($result->num_rows === 0) {
-        echo "Location not found.";
-        exit;
-    }
+$dbConnection = getDatabaseConnection();
 
-    $locationRow = $result->fetch_assoc();
-    $locationId = $locationRow['location_id'];
+$checkQuery = "
+    SELECT * FROM wishlist
+    WHERE user_id = ? AND location_id = ?
+";
+$stmt = $dbConnection->prepare($checkQuery);
+$stmt->bind_param("ii", $userId, $locationId);
+$stmt->execute();
+$result = $stmt->get_result();
 
- 
-    $checkQuery = "SELECT * FROM wishlist WHERE user_id = ? AND location_id = ?";
-    $stmt = $conn->prepare($checkQuery);
-    $stmt->bind_param("ii", $userId, $locationId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        echo "Location is already in your wishlist.";
-        exit;
-    }
-
-    
-    $insertQuery = "INSERT INTO wishlist (user_id, location_id) VALUES (?, ?)";
-    $stmt = $conn->prepare($insertQuery);
-    $stmt->bind_param("ii", $userId, $locationId);
-
-    if ($stmt->execute()) {
-        echo "Location added to wishlist successfully.";
-    } else {
-        echo "Failed to add location to wishlist: " . $stmt->error;
-    }
-
-    $stmt->close();
+if ($result->num_rows > 0) {
+   
+    echo "This location is already in your wishlist.";
 } else {
-    http_response_code(400); 
-    echo "Invalid request.";
+    
+    $insertQuery = "
+        INSERT INTO wishlist (user_id, location_id)
+        VALUES (?, ?)
+    ";
+    $stmt = $dbConnection->prepare($insertQuery);
+    $stmt->bind_param("ii", $userId, $locationId);
+    $stmt->execute();
+    
+    
+    echo "Location added to your wishlist!";
 }
 
-
-$conn->close();
-
+$stmt->close();
+$dbConnection->close();
+?>
