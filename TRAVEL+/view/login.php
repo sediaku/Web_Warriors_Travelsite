@@ -1,16 +1,5 @@
 <?php
 session_start();
-
-// Check if the user is logged in
-if (isset($_SESSION['user_id'])) {
-    // Redirect to the locations page if the user is logged in
-    if ($_SESSION['role'] === 'admin'){
-        header('Location: /view/admin-dashboard.php');
-    }
-    header('Location: user-dashboard.php');
-    exit; 
-}
-
 ?>
 
 <!DOCTYPE html>
