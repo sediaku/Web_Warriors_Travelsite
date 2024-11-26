@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['role'] = $user['role'];
 
             
-            header("Location: ../view/wishlist.php");
+            header("Location: ../view/user-dashboard.php");
             exit;
         } else {
             echo "Invalid username or password.";
