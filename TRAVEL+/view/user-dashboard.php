@@ -3,6 +3,7 @@ include '../db/db-config.php';
 $dbConnection = getDatabaseConnection();
 session_start();
 
+// Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     die("You must be logged in to view your dashboard.");
 }
@@ -10,11 +11,12 @@ if (!isset($_SESSION['user_id'])) {
 $userId = $_SESSION['user_id']; 
 $userRole = $_SESSION['role']; 
 
+// Check if the user has the correct role
 if ($userRole != 1) {
     die("You do not have permission to access this page.");
 }
 
-
+// Fetch blogs for the logged-in user
 $blogsQuery = "
     SELECT blog_id, title, published_date 
     FROM blog
@@ -25,14 +27,7 @@ $blogsStmt->bind_param("i", $userId);
 $blogsStmt->execute();
 $blogsResult = $blogsStmt->get_result();
 
-$blogTokens = []; 
-while ($blog = $blogsResult->fetch_assoc()) {
-    $token = bin2hex(random_bytes(16)); 
-    $blogTokens[$token] = $blog; 
-}
-$_SESSION['blog_tokens'] = $blogTokens; 
-
-// 
+// Fetch reviews for the logged-in user
 $reviewsQuery = "
     SELECT 
         reviews.review_id,
@@ -50,13 +45,6 @@ $reviewsStmt = $dbConnection->prepare($reviewsQuery);
 $reviewsStmt->bind_param("i", $userId);
 $reviewsStmt->execute();
 $reviewsResult = $reviewsStmt->get_result();
-
-$reviewTokens = []; 
-while ($review = $reviewsResult->fetch_assoc()) {
-    $token = bin2hex(random_bytes(16)); 
-    $reviewTokens[$token] = $review; 
-}
-$_SESSION['review_tokens'] = $reviewTokens; 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,8 +63,8 @@ $_SESSION['review_tokens'] = $reviewTokens;
 <main>
     <h1>Welcome to Your Dashboard</h1>
 
-    
-    <?php if (count($blogTokens) > 0): ?>
+    <!-- Blogs Section -->
+    <?php if ($blogsResult->num_rows > 0): ?>
         <h2>Your Blogs</h2>
         <table>
             <thead>
@@ -87,27 +75,27 @@ $_SESSION['review_tokens'] = $reviewTokens;
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($blogTokens as $token => $blog): ?>
+                <?php while ($blog = $blogsResult->fetch_assoc()): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($blog['title']); ?></td>
                         <td><?php echo htmlspecialchars($blog['published_date']); ?></td>
                         <td>
-                            <a href="view-blog-post.php?token=<?php echo urlencode($token); ?>">View</a>
+                            <a href="view-blog-post.php?blog_id=<?php echo htmlspecialchars($blog['blog_id']); ?>">View</a>
                             <form action="../functions/delete-blog.php" method="POST" style="display:inline;">
-                                <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
+                                <input type="hidden" name="blog_id" value="<?php echo htmlspecialchars($blog['blog_id']); ?>">
                                 <button type="submit" onclick="return confirm('Are you sure you want to delete this blog?');">Delete</button>
                             </form>
                         </td>
                     </tr>
-                <?php endforeach; ?>
+                <?php endwhile; ?>
             </tbody>
         </table>
     <?php else: ?>
         <p>You have no blogs.</p>
     <?php endif; ?>
 
-    
-    <?php if (count($reviewTokens) > 0): ?>
+    <!-- Reviews Section -->
+    <?php if ($reviewsResult->num_rows > 0): ?>
         <h2>Your Reviews</h2>
         <table>
             <thead>
@@ -122,7 +110,7 @@ $_SESSION['review_tokens'] = $reviewTokens;
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($reviewTokens as $token => $review): ?>
+                <?php while ($review = $reviewsResult->fetch_assoc()): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($review['location_name']); ?></td>
                         <td><?php echo htmlspecialchars($review['rating']); ?>/5</td>
@@ -132,12 +120,12 @@ $_SESSION['review_tokens'] = $reviewTokens;
                         <td><?php echo htmlspecialchars($review['comments']); ?></td>
                         <td>
                             <form action="../functions/delete-review.php" method="POST" style="display:inline;">
-                                <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
+                                <input type="hidden" name="review_id" value="<?php echo htmlspecialchars($review['review_id']); ?>">
                                 <button type="submit" onclick="return confirm('Are you sure you want to delete this review?');">Delete</button>
                             </form>
                         </td>
                     </tr>
-                <?php endforeach; ?>
+                <?php endwhile; ?>
             </tbody>
         </table>
     <?php else: ?>
@@ -155,3 +143,4 @@ $_SESSION['review_tokens'] = $reviewTokens;
 </footer>
 </body>
 </html>
+
