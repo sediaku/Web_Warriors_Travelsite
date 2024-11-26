@@ -7,8 +7,9 @@
             </button>
             
             <div class="account-dropdown" id="accountDropdown">
-                <a href="login.php">My Dashboard</a>
-                <a href="signup.php">My Wishlist</a>
+                <a href="user-dashboard.php">My Dashboard</a>
+                <a href="wishlist.php">My Wishlist</a>
+                <a href="logout.php">Logout</a>
             </div>
         </div>
         

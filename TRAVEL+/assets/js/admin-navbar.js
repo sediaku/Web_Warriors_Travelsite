@@ -22,20 +22,30 @@ document.addEventListener('DOMContentLoaded', function() {
     accountModal.id = 'accountModal';
 
     // Create account modal links
-    const udashboardLink = document.createElement('a');
-    udashboardLink.href = 'view/user-dashboard.php';
-    udashboardLink.textContent = 'My Dashboard';
+    const adashboardLink = document.createElement('a');
+    adashboardLink.href = '../../view/admin/admin-dashboard.php';
+    adashboardLink.textContent = 'My Dashboard';
 
     const wishlistLink = document.createElement('a');
-    wishlistLink.href = 'view/wishlist.php';
+    wishlistLink.href = '../wishlist.php';
     wishlistLink.textContent = 'My Wishlist';
 
+    const umanagementLink = document.createElement('a');
+    umanagementLink.href = '../../view/admin/user-management.php';
+    umanagementLink.textContent = 'User Management';
+
+    const lmanagementLink = document.createElement('a');
+    lmanagementLink.href = '../../view/admin/location-management.php';
+    lmanagementLink.textContent = 'Location Management';
+
     const logoutLink = document.createElement('a');
-    logoutLink.href = 'view/logout.php';
+    logoutLink.href = '../logout.php';
     logoutLink.textContent = 'Logout';
 
-    accountModal.appendChild(udashboardLink);
+    accountModal.appendChild(adashboardLink);
     accountModal.appendChild(wishlistLink);
+    accountModal.appendChild(umanagementLink);
+    accountModal.appendChild(lmanagementLink);
     accountModal.appendChild(logoutLink);
 
     // Append modals to body
