@@ -1,4 +1,6 @@
 <?php
+
+session_start();
 include '../db/db-config.php';
 $dbConnection = getDatabaseConnection();
 
@@ -52,7 +54,18 @@ if ($result->num_rows === 1) {
     </head>
     <body>
         <header>
-            <?php include 'navbar_in.php'; ?>
+            <?php
+                // Check if user is logged in and assign the appropriate navbar
+                if (isset($_SESSION['user_id'])) {
+                    if ($_SESSION['role'] === 'admin') {
+                        include '/admin/admin-navbar.php';  // For admin users
+                    } else {
+                        include 'navbar_in.php';   // For normal logged-in users
+                    }
+                } else {
+                    include 'navbar_guest.php';   // For logged-out users
+                }
+            ?>
         </header>
 
         <section class="blog-view">
