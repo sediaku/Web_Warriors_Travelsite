@@ -3,6 +3,8 @@
 session_start();
 include '../functions/locationdetails.php'; 
 
+// Check if a message is present in the query string
+$message = isset($_GET['message']) ? htmlspecialchars($_GET['message']) : null;
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +17,7 @@ include '../functions/locationdetails.php';
     <link rel="stylesheet" href="../assets/css/location-style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
 </head>
-    <body>
+<body>
     <header>
         <?php 
         // Check if user is logged in and assign the appropriate navbar
@@ -28,19 +30,31 @@ include '../functions/locationdetails.php';
         } else {
             include 'navbar_guest.php';   // For logged-out users
         }
-    ?>
+        ?>
     </header>
+
+    <main>
+        <!-- Display message if available -->
+        <?php if ($message): ?>
+            <div class="message">
+                <?php echo $message; ?>
+            </div>
+        <?php endif; ?>
 
         <section class="location-view">
             <div class="left">
                 <div class="name"><?php echo htmlspecialchars($locationDetails['location_name']); ?></div>
                 <div class="book">
-                    <a href="<?php echo $locationDetails['booking_link']; ?>">Book Now</a>
+                    <a href="<?php echo htmlspecialchars($locationDetails['booking_link']); ?>">Book Now</a>
                 </div>
                 <div class="rating">
                     Average Rating: <span><?php echo htmlspecialchars($locationDetails['average_rating'] ?? 'N/A'); ?></span>
                 </div>
-                <button name="add-to-wishlist" class="wishlist" id="addToWishlistBtn">Add to Wishlist</button>
+                <!-- Add to Wishlist Form -->
+                <form action="../functions/addtowishlist.php" method="POST" class="wishlist-form">
+                    <input type="hidden" name="location_id" value="<?php echo htmlspecialchars($locationDetails['location_id']); ?>">
+                    <button type="submit" name="add-to-wishlist" class="wishlist">Add to Wishlist</button>
+                </form>
                 <button class="blog">See Blog Posts Mentioning This Location</button>
             </div>
 
@@ -102,6 +116,8 @@ include '../functions/locationdetails.php';
                 </div>       
             </div>
         </section>
+
+        <!-- Modal for Adding Reviews -->
         <div id="reviewModal" class="modal">
             <div class="modal-content">
                 <span class="close-modal">&times;</span>
@@ -128,31 +144,9 @@ include '../functions/locationdetails.php';
                 </form>
             </div>
         </div>
+    </main>
 
-        <script src="../assets/js/review.js"></script>
-        <script src="../assets/js/navbar-in.js"></script>
-        <script>document.getElementById('addToWishlistBtn').addEventListener('click', function() {
-            
-            var locationId = <?php echo json_encode($locationDetails['location_id']); ?>;
-            
-            if (!locationId) {
-                alert("Location ID is not available.");
-                return;
-            }
-
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "../functions/addtowishlist.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-            xhr.onload = function() {
-                if (xhr.status == 200) {
-                    alert(xhr.responseText); 
-                }
-            };
-
-            xhr.send("location_id=" + locationId); 
-        });
-        </script>
-
-    </body>
+    <script src="../assets/js/review.js"></script>
+    <script src="../assets/js/navbar-in.js"></script>
+</body>
 </html>
