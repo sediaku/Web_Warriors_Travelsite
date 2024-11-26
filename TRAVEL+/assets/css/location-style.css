@@ -107,7 +107,7 @@ section button:hover {
     cursor: pointer;
 }
 
-.star .active{
+.star.active{
     color: #ffd700;
 }
 
