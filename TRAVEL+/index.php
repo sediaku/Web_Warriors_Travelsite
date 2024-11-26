@@ -29,7 +29,7 @@
                     <a href="view/storyboard.php">Storyboard</a>
                     <a href="view/contact-us.php">Contact Us</a>
                     <a href="view/about.php">About The Project</a>
-                    <a href="index.php" class="active">Home</a>
+                    <a href="index.php">Home</a>
                 </nav>
 
                 <div>

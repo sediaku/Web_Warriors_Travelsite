@@ -21,7 +21,7 @@ $dbConnection = getDatabaseConnection();
             if ($_SESSION['role'] == 1) {
                 include 'navbar_in.php';
             } else {
-                include '../assets/admin-navbar.php';
+                include '../view/admin/admin-navbar.php';
             }
         } else {
             include 'navbar_guest.php';
@@ -108,5 +108,6 @@ $dbConnection = getDatabaseConnection();
             });
         });
     </script>
+    <script src="../assets/js/navbar-in.js"></script>
 </body>
 </html>

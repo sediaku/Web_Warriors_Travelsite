@@ -52,5 +52,6 @@
             </div>
 
         </section>
+        <script src="../../assets/js/admin-navbar.js"></script>
     </body>
 </html>
