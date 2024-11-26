@@ -46,8 +46,6 @@
         <footer>
             <?php include 'footer.php'; ?>
         </footer>
-
-        <script src="../assets/js/blog.js"></script>
     </body>
 
     

@@ -147,10 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit">Add Location</button>
         </form>
     </section>
-    <script src="../assets/js/navbar-in.js"></script>
-</body>
 
-    <script src="../assets/js/navbar-in.js"></script>
     <footer>
         <?php include 'footer.php'; ?>
     </footer>

@@ -28,3 +28,5 @@
         </button>
     </div>
 </div>
+
+<script src="../../assets/js/admin-navbar.js"></script>

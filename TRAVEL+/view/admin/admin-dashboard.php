@@ -163,7 +163,6 @@ $topUsersResult = $dbConnection->query($topUsersQuery);
         <?php endif; ?>
     </div>
 </section>
-<script src="../../assets/js/admin-navbar.js"></script>
 </body>
 </html>
 

@@ -1,79 +1,86 @@
-document.getElementById('signup-form').addEventListener('submit', function (event) {
-    event.preventDefault();
-    document.querySelectorAll('.error').forEach(function (error) {
-        error.remove();
+document.addEventListener('DOMContentLoaded', function() {
+    const signupForm = document.querySelector('.form');
+    
+    signupForm.addEventListener('submit', function(event) {
+        // Reset previous error messages
+        clearErrors();
+        
+        // Validate username
+        const username = document.getElementById('username');
+        if (!validateUsername(username.value)) {
+            showError(username, 'Username must be 3-20 characters long and contain only letters, numbers, and underscores');
+            event.preventDefault();
+            return;
+        }
+        
+        // Validate email
+        const email = document.getElementById('email');
+        if (!validateEmail(email.value)) {
+            showError(email, 'Please enter a valid email address');
+            event.preventDefault();
+            return;
+        }
+        
+        // Validate password
+        const password = document.getElementById('password');
+        if (!validatePassword(password.value)) {
+            showError(password, 'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number');
+            event.preventDefault();
+            return;
+        }
+        
+        // Validate password confirmation
+        const passwordConfirm = document.getElementById('password-confirm');
+        if (password.value !== passwordConfirm.value) {
+            showError(passwordConfirm, 'Passwords do not match');
+            event.preventDefault();
+            return;
+        }
     });
 
-    var isValid = true;
-
-    let fname = document.querySelector('#signup-fname input').value;
-    let lname = document.querySelector('#signup-lname input').value;
-    let email = document.querySelector('#signup-email input').value;
-    let password = document.querySelector('#signup-pass input').value;
-    let confirm = document.querySelector('#signup-confirm input').value;
-
-    if (fname === "") {
-        errorMessage('signup-fname', 'Enter your first name');
-        isValid = false; // Mark the form as invalid
+    function validateUsername(username) {
+        // Username must be 3-20 characters long, contain only letters, numbers, and underscores
+        const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+        return usernameRegex.test(username);
     }
 
-    if (lname === "") {
-        errorMessage('signup-lname', 'Enter your last name');
-        isValid = false; // Mark the form as invalid
+    function validateEmail(email) {
+        // Basic email validation regex
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
     }
 
-    if (!validateEmail(email)) {
-        errorMessage('signup-email', 'Enter a valid email');
-        isValid = false; // Mark the form as invalid
+    function validatePassword(password) {
+        // Password must be at least 8 characters long and contain at least one uppercase, 
+        // one lowercase letter, and one number
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        return passwordRegex.test(password);
     }
 
-    if (!validatePassword(password)) {
-        isValid = false;
+    function showError(inputElement, message) {
+        // Create error message element if it doesn't exist
+        let errorElement = inputElement.nextElementSibling;
+        if (!errorElement || !errorElement.classList.contains('validation-error')) {
+            errorElement = document.createElement('span');
+            errorElement.classList.add('validation-error');
+            inputElement.parentNode.insertBefore(errorElement, inputElement.nextSibling);
+        }
+        
+        // Set error message
+        errorElement.textContent = message;
+        errorElement.style.color = 'red';
+        inputElement.style.borderColor = 'red';
     }
 
-    if (password !== confirm) {
-        errorMessage('signup-confirm', 'Passwords do not match');
-        isValid = false;
-    }
-    
-    if (isValid) {
-        this.submit();
+    function clearErrors() {
+        // Remove all existing error messages
+        const errorElements = document.querySelectorAll('.validation-error');
+        errorElements.forEach(el => el.remove());
+        
+        // Reset input border colors
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.style.borderColor = '';
+        });
     }
 });
-
-function validateEmail(email) {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-}
-
-function validatePassword(password) {
-    if (password.length < 8) {
-        errorMessage('signup-pass', 'Password must be at least 8 characters');
-        return false;
-    }
-
-    if (!/[A-Z]/.test(password)) {
-        errorMessage('signup-pass', 'Password must contain a capital letter');
-        return false;
-    }
-
-    if ((password.match(/\d/g) || []).length < 3) {
-        errorMessage('signup-pass', 'Password must contain at least three digits');
-        return false;
-    }
-
-    if (!/[!"£$%^&*(){}@<>?+_-]/.test(password)) {
-        errorMessage('signup-pass', 'Password must contain at least one the following special characters: !"£$%^&*(){}@<>?+_-');
-        return false;
-    }
-    return true; // Valid password
-}
-
-// Function to display an error message for a specific form field
-function errorMessage(fieldId, message) {
-    const field = document.getElementById(fieldId);
-    const error = document.createElement("span");
-    error.textContent = message;
-    error.className = "error";
-    field.insertAdjacentElement("afterend", error);
-}

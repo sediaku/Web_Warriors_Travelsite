@@ -39,6 +39,7 @@
         <footer>
             <?php include 'footer.php'; ?>
         </footer>
-        <script src="../assets/js/navbar-guest.js"></script>
+        
+        <script src="assets/js/login-validation.js"></script>
     </body>
 </html>

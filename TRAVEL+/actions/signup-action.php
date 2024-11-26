@@ -4,8 +4,6 @@ $dbConnection = getDatabaseConnection();
 
 session_start();
 
-
-
 $username = "";
 $email = "";
 
@@ -34,9 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $error = true;
     }
 
-    
-
-
     $statement = $dbConnection->prepare("SELECT user_id FROM users WHERE email = ?");
     $statement->bind_param("s",$email);
 
@@ -58,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $error = true;
     }
 
-    
 
     if (!$error){
         $password = password_hash($password, PASSWORD_DEFAULT);

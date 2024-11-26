@@ -34,8 +34,6 @@ $reviewsQuery = "
         reviews.review_text,
         reviews.rating,
         reviews.review_date,
-        reviews.likes,
-        reviews.comments,
         locations.location_name 
     FROM reviews 
     INNER JOIN locations ON reviews.location_id = locations.location_id 
@@ -104,8 +102,6 @@ $reviewsResult = $reviewsStmt->get_result();
                     <th>Rating</th>
                     <th>Review</th>
                     <th>Date</th>
-                    <th>Likes</th>
-                    <th>Comments</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -116,8 +112,6 @@ $reviewsResult = $reviewsStmt->get_result();
                         <td><?php echo htmlspecialchars($review['rating']); ?>/5</td>
                         <td><?php echo htmlspecialchars($review['review_text']); ?></td>
                         <td><?php echo htmlspecialchars($review['review_date']); ?></td>
-                        <td><?php echo htmlspecialchars($review['likes']); ?></td>
-                        <td><?php echo htmlspecialchars($review['comments']); ?></td>
                         <td>
                             <form action="../functions/delete-review.php" method="POST" style="display:inline;">
                                 <input type="hidden" name="review_id" value="<?php echo htmlspecialchars($review['review_id']); ?>">
@@ -141,7 +135,6 @@ $reviewsResult = $reviewsStmt->get_result();
 <footer>
     <?php include 'footer.php'; ?>
 </footer>
-<script src="../assets/js/navbar-in.js"></script>
 </body>
 </html>
 
