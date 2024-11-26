@@ -126,7 +126,7 @@ html {
 
     .downnav {
         grid-template-columns: 1fr;
-        font-size: 150%;
+        font-size: 180%;
     }
 
 }
@@ -163,9 +163,9 @@ html {
     .topnav .view-more:hover{
         cursor: pointer; 
     }
-
+    
     .downnav {
         grid-template-columns: 1fr;
+        font-size: 180%;
     }
-
 }
