@@ -52,7 +52,7 @@ $stmt->close();
                         <tr>
                             <td><?php echo htmlspecialchars($user['user_id']); ?></td>
                             <td><?php echo htmlspecialchars($user['username']); ?></td>
-                            <td><?php echo $user['email']; ?></td>
+                            <td><?php echo htmlspecialchars($user['email']); ?></td>
                             <td>
                                 <?php if ($user['profile_picture']): ?>
                                     <img src="<?php echo htmlspecialchars($user['profile_picture']); ?>" alt="Profile Picture" width="50" height="50">
@@ -63,7 +63,7 @@ $stmt->close();
                             <td><?php echo htmlspecialchars($user['date_joined']); ?></td>
                             <td><?php echo htmlspecialchars($user['last_login']); ?></td>
                             <td>
-                                <a href="edit-user.php?user_id=<?php echo urlencode($user['user_id']); ?>">Edit</a> | 
+                                <a href="view-profile.php?user_id=<?php echo urlencode($user['user_id']); ?>">View Profile</a> | 
                                 <form action="delete-user.php" method="POST" style="display:inline;">
                                     <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user['user_id']); ?>">
                                     <button type="submit" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
@@ -83,3 +83,4 @@ $stmt->close();
 <?php
 $dbConnection->close();
 ?>
+
