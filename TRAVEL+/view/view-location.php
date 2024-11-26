@@ -55,7 +55,6 @@ $message = isset($_GET['message']) ? htmlspecialchars($_GET['message']) : null;
                     <input type="hidden" name="location_id" value="<?php echo htmlspecialchars($locationDetails['location_id']); ?>">
                     <button type="submit" name="add-to-wishlist" class="wishlist">Add to Wishlist</button>
                 </form>
-                <button class="blog">See Blog Posts Mentioning This Location</button>
             </div>
 
             <div class="right">
