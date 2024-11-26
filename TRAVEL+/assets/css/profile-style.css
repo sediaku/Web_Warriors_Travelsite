@@ -1,0 +1,115 @@
+section{
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+
+button{
+    font-size: 100%;
+    border: 0.1rem solid rgb(11, 88, 11);
+    padding: 1%;
+    border-radius: 0.2rem;
+}
+
+.left {
+    display: grid;
+    grid-template-columns: 1fr;
+    max-height: 25rem;
+}
+
+
+.left div{
+    height: 84%;
+    max-width: 90%;
+    border: 0.1rem solid rgb(11, 88, 11);
+    padding: 0.2rem 0.2rem 0.2rem 0.2rem;
+    margin-bottom: 1%;
+    border-radius: 0.2rem;
+}
+
+.left button{
+    width: 30%;
+    height: 15%;
+}
+
+.right button{
+    width: 15%;
+}
+
+
+.right div{
+    min-height: 15rem;
+    max-width: 90%;
+    border: 0.1rem solid rgb(11, 88, 11);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+
+
+/* Tablet Media Query */
+@media screen and (max-width: 768px) {
+    section{
+        font-size: 200%;
+        grid-template-columns: 1fr;
+    }
+
+    section div{
+        max-width: 100%;
+    }
+
+    .left {
+        height: 15rem;
+        grid-template-columns: 2fr 1fr;
+        max-width: 100%;
+    }
+
+    .left div{
+        width: 80%;
+        height: 95%;
+    }
+
+    .left button{
+        width: 50%;
+        height: 20%
+    }
+
+    .right div{
+        max-width: 100%;
+    }
+
+}
+
+/* Mobile Media Query */
+@media screen and (max-width: 480px) {
+    section{
+        font-size: 200%;
+        grid-template-columns: 1fr;
+    }
+
+    section div{
+        max-width: 100%;
+    }
+
+    .left {
+        height: 15rem;
+        grid-template-columns: 2fr 1fr;
+        max-width: 100%;
+    }
+
+    .left div{
+        width: 80%;
+        height: 95%;
+    }
+
+    .left button{
+        width: 50%;
+        height: 20%
+    }
+
+    .right div{
+        max-width: 100%;
+    }
+
+}
+
