@@ -38,11 +38,6 @@ html {
     color: rgb(8, 70, 8);
 }
 
-.topnav a.active {
-    color: rgb(8, 70, 8);
-    font-weight: bold;
-}
-
 .topnav .view-more {
     display: none;
 }
