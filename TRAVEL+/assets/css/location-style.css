@@ -10,7 +10,7 @@ section{
     grid-template-columns: 1fr 3fr;
 }
 
-section button {
+.right button, .left button {
     background-color: rgb(8, 70, 8);
     color: white;
     font-size: 110%;
@@ -19,7 +19,7 @@ section button {
     margin-bottom: 2rem;
 }
 
-section button:hover {
+.right button:hover, .left button:hover {
     background-color: rgb(11, 88, 11);
 }
 
@@ -57,6 +57,7 @@ section button:hover {
 .modal{
     display: none;
     position: fixed;
+    border: none;
     top: 0;
     left: 0;
     width: 100%;
@@ -68,10 +69,10 @@ section button:hover {
 .modal-content{
     position: relative;
     background-color: #fff;
-    margin: 15% auto;
-    padding:1%;
+    margin: 10% 15% 10% 15%;
     border-radius: 0.2rem;
-    width:70%;
+    padding: 5%;
+    width:65%;
     animation: modalSlide 0.3s ease-out;
 }
 
@@ -98,12 +99,11 @@ section button:hover {
 .star-rating{
     display: inline-flex;
     gap: 1%;
-    padding: 1% 0;
 }
 
 .star{
     color: #ddd;
-    font-size: 1.5rem;
+    font-size: 150%;
     cursor: pointer;
 }
 
@@ -111,20 +111,25 @@ section button:hover {
     color: #ffd700;
 }
 
+.review-form div{
+    margin-bottom: 1%;
+}
+
 .review-form{
     display: flex;
     flex-direction: column;
-    gap:1%;
+    gap:2%;
 }
 
 .review-form label{
     font-weight: bold;
-    margin-bottom: 2%;
+    font-size: 120%;
+    margin-right: 3%;
 }
 
 .review-form textarea{
     width: 90%;
-    min-height:30%;
+    min-height:80%;
     padding:1%;
     border: 0.1rem solid #ddd;
     border-radius: 1%;
@@ -135,13 +140,13 @@ section button:hover {
     display: flex;
     gap:2%;
     justify-content: flex-end;
-    margin-top: 5%;
 }
 
 .modal-buttons button{
     padding:1% 2%;
+    font-size: 70%;
     border: none;
-    border-radius: 0.5rem;
+    border-radius: 0.2rem;
     cursor: pointer;
 }
 
@@ -176,8 +181,9 @@ section button:hover {
     }
 
     .modal-content{
-        width: 80%;
-        font-size: 200%;
+        margin: 15% 4.5% 15% 4.5%;
+        width:80%;
+        font-size: 120%;
     }
 
 }
@@ -198,8 +204,9 @@ section button:hover {
     }
 
     .modal-content{
-        width: 80%;
-        font-size: 200%;
+        margin: 15% 4.5% 15% 4.5%;
+        width:80%;
+        font-size: 120%;
     }
 
 }
