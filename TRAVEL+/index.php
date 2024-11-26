@@ -2,7 +2,7 @@
 session_start();
 
 // Check if the user is logged in
-if (isset($_SESSION['role'])) {
+if (isset($_SESSION['user_id'])) {
     // Redirect to the locations page if the user is logged in
     header('Location: view/all-locations.php');
     exit; 
