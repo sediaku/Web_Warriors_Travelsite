@@ -17,7 +17,7 @@
         <a href="storyboard.php">Storyboard</a>
         <a href="contact-us.php">Contact Us</a>
         <a href="about.php">About The Project</a>
-        <a href="../index.php">Home</a>
+        <a href="all-locations.php">Locations</a>
     </nav>
 
     <div>
