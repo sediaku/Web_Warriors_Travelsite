@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', function(){
     const stars = document.querySelectorAll('.star');
     const reviewText = document.getElementById('reviewText');
 
+    const locationId = new URLSearchParams(window.location.search).get('id');
+
     let currentRating = 0;
 
     addReviewBtn.addEventListener('click', function(){
@@ -64,15 +66,40 @@ document.addEventListener('DOMContentLoaded', function(){
 
     reviewForm.addEventListener('submit', function(e){
         e.preventDefault();
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+
         const review = {
+            location_id: locationId,
             rating: currentRating,
             text: reviewText.value.trim()
         };
 
-        console.log('Review submitted:', review);
-
-        closeModal();
-
-        alert('Review submitted successfully!');
+        fetch('review-action.php',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(review)
+        })
+        .then(response => response.json())
+        .then(data =>{
+            if (data.success){
+                alert('Review submitted successfuly!');
+                closeModal();
+            }
+            else{
+                alert('Error: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occured while submitting the review');
+        })
+        .finally(() =>{
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Review';
+        });
     });
 });

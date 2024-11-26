@@ -17,6 +17,7 @@ include '../functions/locationdetails.php';
     <?php include 'navbar_in.php'; ?>
 </header>
 
+<<<<<<< HEAD
 <section class="location-view">
     <div class="left">
         <div class="name"><?php echo htmlspecialchars($locationDetails['location_name']); ?></div>
@@ -29,6 +30,12 @@ include '../functions/locationdetails.php';
         <button name="add-to-wishlist" class="wishlist">Add to Wishlist</button>
         <button class="blog">See Blog Posts Mentioning This Location</button>
     </div>
+=======
+    <body>
+    <header>
+        <?php include 'navbar_in.php'; ?>
+    </header>
+>>>>>>> 13d1a732e7e3c4468eeeb8961230fe21c5914534
 
     <div class="right">
         <div class="Description">
