@@ -50,7 +50,7 @@ $dbConnection = getDatabaseConnection();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        echo "<table>
+        echo "<table class = 'wishlist'>
                 <thead>
                     <tr>
                         <th>Location</th>
@@ -65,8 +65,12 @@ $dbConnection = getDatabaseConnection();
             <tr>
                 <td>{$locationName}</td>
                 <td>
-                    <a href='view-location.php?location_id={$locationId}'>View More</a>
-                    <button class='delete-btn' data-location-id='{$locationId}'>Delete</button>
+                    <a href='view-location.php?location_id={$locationId}'>
+                        <span class='material-symbols-outlined'>visibility</span>
+                    </a>
+                    <button class='delete-btn' data-location-id='{$locationId}'>
+                        <span class='material-symbols-outlined'>delete</span>
+                    </button>
                 </td>
             </tr>";
         }
