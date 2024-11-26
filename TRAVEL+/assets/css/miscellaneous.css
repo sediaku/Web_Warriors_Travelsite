@@ -1,0 +1,57 @@
+.banner {
+    width: 100%;
+    min-height: 10rem;
+    background: url("../images/Archer-Cornfield.jpg") center no-repeat;
+    background-size: cover;
+    padding-top: 15%;
+}
+
+.about, .about-project h1{
+    width:50%;
+    margin: 5% 25% 5% 25%;
+}
+
+.about-project h1{
+    text-align: center;
+}
+
+/* Tablet Media Query */
+@media screen and (max-width: 768px) {
+    .banner {
+        min-height: 15rem;
+    }
+
+    .about {
+        font-size: 150%;
+    }
+
+    .about-project h1{
+        font-size: 200%;
+    }
+
+    .about, .about-project h1{
+        width:90%;
+        margin: 5% 15% 5% 5%;
+    }
+
+}
+
+/* Mobile Media Query */
+@media screen and (max-width: 480px) {
+    .banner {
+        min-height: 15rem;
+    }
+
+    .about {
+        font-size: 150%;
+    }
+
+    .about-project h1{
+        font-size: 200%;
+    }
+    
+    .about, .about-project h1{
+        width:90%;
+        margin: 5% 15% 5% 5%;
+    }
+}
