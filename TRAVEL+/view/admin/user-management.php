@@ -63,8 +63,8 @@ $stmt->close();
                             <td><?php echo htmlspecialchars($user['date_joined']); ?></td>
                             <td><?php echo htmlspecialchars($user['last_login']); ?></td>
                             <td>
-                                <a href="view-profile.php?user_id=<?php echo urlencode($user['user_id']); ?>">View Profile</a> | 
-                                <form action="delete-user.php" method="POST" style="display:inline;">
+                                <a href="../view-profile.php?user_id=<?php echo urlencode($user['user_id']); ?>">View Profile</a> | 
+                                <form action="../../functions/delete-user.php" method="POST" style="display:inline;">
                                     <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user['user_id']); ?>">
                                     <button type="submit" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
                                 </form>

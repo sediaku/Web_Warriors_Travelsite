@@ -132,7 +132,7 @@ include '../functions/locationdetails.php';
         <script src="../assets/js/review.js"></script>
         <script src="../assets/js/navbar-in.js"></script>
         <script>document.getElementById('addToWishlistBtn').addEventListener('click', function() {
-            // Get the location_id from the PHP variable (set in your HTML via PHP)
+            
             var locationId = <?php echo json_encode($locationDetails['location_id']); ?>;
             
             if (!locationId) {
@@ -146,11 +146,11 @@ include '../functions/locationdetails.php';
 
             xhr.onload = function() {
                 if (xhr.status == 200) {
-                    alert(xhr.responseText); // Show the response from the server (success or error)
+                    alert(xhr.responseText); 
                 }
             };
 
-            xhr.send("location_id=" + locationId); // Send location ID to PHP backend
+            xhr.send("location_id=" + locationId); 
         });
         </script>
 
