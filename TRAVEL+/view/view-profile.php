@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../db/db-config.php'; // Database connection
+$dbConnection = getDatabaseConnection();
 include '../functions/userdetails.php'; // Fetch user details
 
 // Get user ID from session or query parameter
@@ -14,7 +15,7 @@ if (!$profileUserId && !$loggedInUserId) {
 
 // Fetch the profile user details
 $userIdToView = $profileUserId ?? $loggedInUserId; // View logged-in user's profile if not specified
-$userDetails = getUserDetails($userIdToView, $conn);
+$userDetails = getUserDetails($userIdToView, $dbConnection);
 
 if (!$userDetails) {
     echo "User not found.";
