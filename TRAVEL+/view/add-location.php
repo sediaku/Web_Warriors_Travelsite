@@ -10,7 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category = trim($_POST['category']);
     $description = trim($_POST['description']);
     $openingHours = trim($_POST['opening_hours']);
-    $bookingAllowed = trim($_POST['booking_allowed']);
     $contactInfo = trim($_POST['contact_info']);
     $priceRange = trim($_POST['price_range']);
     $bookingLink = trim($_POST['booking_link']);
@@ -25,9 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $dbConnection = getDatabaseConnection();
             
             // Insert the new location
-            $query = "INSERT INTO locations (location_name, address, city, country, category, description, opening_hours, booking_allowed, contact_info, price_range, booking_link) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $query = "INSERT INTO locations (location_name, address, city, country, category, description, opening_hours, contact_info, price_range, booking_link) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $dbConnection->prepare($query);
-            $stmt->bind_param("sssssssssss", $locationName, $address, $city, $country, $category, $description, $openingHours, $bookingAllowed, $contactInfo, $priceRange, $bookingLink);
+            $stmt->bind_param("ssssssssss", $locationName, $address, $city, $country, $category, $description, $openingHours, $contactInfo, $priceRange, $bookingLink);
             
             if ($stmt->execute()) {
                 $success = "Location added successfully!";
@@ -110,16 +109,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div>
             <label for="opening_hours">Opening Hours</label>
             <input type="text" id="opening_hours" name="opening_hours" placeholder="e.g., Mon-Fri 9am-5pm">
-            </div>
-
-            <div>
-            <label>
-                <label for="Booking allowed">Is Booking Allowed?</label>
-                <input type="radio" name="booking_allowed" value="yes"> Yes
-                </label>
-                <label>
-                <input type="radio" name="booking_allowed" value="no"> No
-            </label>
             </div>
 
             <div>
