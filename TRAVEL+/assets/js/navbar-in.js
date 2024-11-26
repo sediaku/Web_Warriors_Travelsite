@@ -23,15 +23,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Create account modal links
     const udashboardLink = document.createElement('a');
-    udashboardLink.href = 'view/user-dashboard.php';
+    udashboardLink.href = 'user-dashboard.php';
     udashboardLink.textContent = 'My Dashboard';
 
     const wishlistLink = document.createElement('a');
-    wishlistLink.href = 'view/wishlist.php';
+    wishlistLink.href = 'wishlist.php';
     wishlistLink.textContent = 'My Wishlist';
 
     const logoutLink = document.createElement('a');
-    logoutLink.href = 'view/logout.php';
+    logoutLink.href = 'logout.php';
     logoutLink.textContent = 'Logout';
 
     accountModal.appendChild(udashboardLink);
