@@ -18,6 +18,7 @@
                         <button class="account" id="accountBtn">
                             <span class="material-symbols-outlined">account_circle</span>
                         </button>
+                        
                         <div class="account-dropdown" id="accountDropdown">
                             <a href="view/login.php">Login</a>
                             <a href="view/signup.php">Sign Up</a>
@@ -71,7 +72,8 @@
         <footer>
             <?php include 'view/footer.php'; ?>
         </footer>
-        <script src="assets/js/navbar.js"></script>
+
+        <script src="assets/js/navbar-guest.js"></script>
     </body>
 </html>
 
