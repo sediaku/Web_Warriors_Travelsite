@@ -2,15 +2,26 @@
 include '../../db/db-config.php';
 session_start();
 
-// Check if user is logged in and has admin privileges (role = 2)
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 2) {
     die("Access denied. You do not have permission to view this page.");
 }
 
 $dbConnection = getDatabaseConnection();
 
-// Fetch all locations
-$locationsQuery = "SELECT * FROM locations ORDER BY location_name ASC";
+// Query to fetch locations with average rating
+$locationsQuery = "
+    SELECT 
+        locations.*,
+        COALESCE(AVG(reviews.rating), 0) AS average_rating
+    FROM 
+        locations
+    LEFT JOIN 
+        reviews ON locations.location_id = reviews.location_id
+    GROUP BY 
+        locations.location_id
+    ORDER BY 
+        locations.location_name ASC";
+
 $locationsStmt = $dbConnection->prepare($locationsQuery);
 $locationsStmt->execute();
 $locationsResult = $locationsStmt->get_result();
@@ -55,7 +66,13 @@ $locationsResult = $locationsStmt->get_result();
                         <td><?php echo htmlspecialchars($location['city']); ?></td>
                         <td><?php echo htmlspecialchars($location['country']); ?></td>
                         <td><?php echo htmlspecialchars($location['category']); ?></td>
-                        <td><?php echo htmlspecialchars($location['average_rating'] ?: 'N/A'); ?></td>
+                        <td>
+                            <?php 
+                                echo $location['average_rating'] > 0 
+                                    ? htmlspecialchars(number_format($location['average_rating'], 2)) 
+                                    : "N/A"; 
+                            ?>
+                        </td>
                         <td>
                             <a href="../view-location.php?location_id=<?php echo htmlspecialchars($location['location_id']); ?>">View More</a>
                             <a href="../edit-location.php?location_id=<?php echo htmlspecialchars($location['location_id']); ?>">Edit</a>
