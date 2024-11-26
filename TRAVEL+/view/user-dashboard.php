@@ -116,8 +116,6 @@ $reviewsResult = $reviewsStmt->get_result();
                         <td><?php echo htmlspecialchars($review['rating']); ?>/5</td>
                         <td><?php echo htmlspecialchars($review['review_text']); ?></td>
                         <td><?php echo htmlspecialchars($review['review_date']); ?></td>
-                        <td><?php echo htmlspecialchars($review['likes']); ?></td>
-                        <td><?php echo htmlspecialchars($review['comments']); ?></td>
                         <td>
                             <form action="../functions/delete-review.php" method="POST" style="display:inline;">
                                 <input type="hidden" name="review_id" value="<?php echo htmlspecialchars($review['review_id']); ?>">
