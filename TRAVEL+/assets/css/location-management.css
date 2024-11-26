@@ -1,0 +1,69 @@
+/* General Table Styles */
+.manage-locations table {
+    margin-left: 2.5%;
+    width: 95%;
+    border-top: 0.1rem solid rgb(11, 88, 11);
+    border-collapse: collapse;
+}
+
+.manage-locations a {
+    text-decoration: none;
+    color: rgb(11, 88, 11);
+    margin-right: 2%;
+    width: 8%;
+    height: 100%;
+}
+
+.manage-locations button {
+    background: none;
+    border: none;
+    color: red;
+    margin-right: 2%;
+    width: 8%;
+    height: 100%;
+}
+
+.manage-locations button:hover {
+    cursor: pointer;
+}
+
+.manage-locations td, .manage-locations th {
+    border-bottom: 0.1rem solid rgb(11, 88, 11);
+    text-align: left;
+    padding: 1%;
+}
+
+.manage-locations tr:nth-child(even) {
+    background-color: rgb(220, 255, 220);
+}
+
+.manage-locations tr:hover {
+    background-color: rgb(220, 255, 220);
+}
+
+.manage-locations th {
+    background-color: rgb(220, 255, 220);
+    color: black;
+    font-weight: bold;
+}
+
+/* Admin Header */
+.manage-locations h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Tablet Media Query */
+@media screen and (max-width: 768px) {
+    .manage-locations table, h1 {
+        font-size: 200%;
+    }
+}
+
+/* Mobile Media Query */
+@media screen and (max-width: 480px) {
+    .manage-locations table, h1 {
+        font-size: 200%;
+    }
+}
