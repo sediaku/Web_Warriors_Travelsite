@@ -7,8 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Validate username
         const username = document.getElementById('username');
-        if (!validateUsername(username.value)) {
-            showError(username, 'Username must be 3-20 characters long and contain only letters, numbers, and underscores');
+        const trimmedUsername = username.value.trim(); // Trim any leading/trailing whitespace
+        
+        console.log('Trimmed Username:', trimmedUsername); // Debug: check the actual input value
+        
+        if (!validateUsername(trimmedUsername)) {
+            showError(username, 'Username must be 3-20 characters long and contain only letters, numbers, underscores, and periods');
             event.preventDefault();
             return;
         }
@@ -39,22 +43,26 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function validateUsername(username) {
-        // Username must be 3-20 characters long, contain only letters, numbers, and underscores
-        const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
-        return usernameRegex.test(username);
+        // Debugging the regex test:
+        console.log('Validating username with regex:', /^[a-zA-Z0-9_.]{3,20}$/.test(username));
+        
+        // Username can contain letters, numbers, underscores, and periods
+        // Ensure username is between 3 and 20 characters long
+        const usernameRegex = /^[a-zA-Z0-9_.]{3,20}$/;
+        return usernameRegex.test(username); // Return true if the username matches the pattern
     }
 
     function validateEmail(email) {
         // Basic email validation regex
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
+        return emailRegex.test(email); // Return true if the email matches the pattern
     }
 
     function validatePassword(password) {
         // Password must be at least 8 characters long and contain at least one uppercase, 
         // one lowercase letter, and one number
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-        return passwordRegex.test(password);
+        return passwordRegex.test(password); // Return true if the password matches the pattern
     }
 
     function showError(inputElement, message) {

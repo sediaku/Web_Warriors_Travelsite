@@ -5,36 +5,33 @@ document.addEventListener('DOMContentLoaded', function() {
         
         clearErrors();
         
-       
         const username = document.getElementById('username');
         if (!validateUsername(username.value)) {
-            showError(username, 'Username must be 3-20 characters long and contain only letters, numbers, and underscores');
+            showError(username, 'Username must contain only letters, numbers, underscores, and periods');
             event.preventDefault();
             return;
         }
         
-       
         const password = document.getElementById('password');
         if (!validatePassword(password.value)) {
-            showError(password, 'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number');
+            showError(password, 'Password cannot be empty');
             event.preventDefault();
             return;
         }
     });
 
+    // Validate if the username is not empty and consists of valid characters (letters, numbers, underscores, and periods)
     function validateUsername(username) {
-        const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
-        return usernameRegex.test(username);
+        const usernameRegex = /^[a-zA-Z0-9_\.]+$/;
+        return username.length > 0 && usernameRegex.test(username);
     }
 
+    // Validate if the password is not empty (no character type checks)
     function validatePassword(password) {
-        
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-        return passwordRegex.test(password);
+        return password.length > 0;
     }
 
     function showError(inputElement, message) {
-        
         let errorElement = inputElement.nextElementSibling;
         if (!errorElement || !errorElement.classList.contains('validation-error')) {
             errorElement = document.createElement('span');
@@ -42,18 +39,15 @@ document.addEventListener('DOMContentLoaded', function() {
             inputElement.parentNode.insertBefore(errorElement, inputElement.nextSibling);
         }
         
-        
         errorElement.textContent = message;
         errorElement.style.color = 'red';
         inputElement.style.borderColor = 'red';
     }
 
     function clearErrors() {
-        
         const errorElements = document.querySelectorAll('.validation-error');
         errorElements.forEach(el => el.remove());
-        
-        
+
         const inputs = document.querySelectorAll('input');
         inputs.forEach(input => {
             input.style.borderColor = '';
