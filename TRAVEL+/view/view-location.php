@@ -1,7 +1,10 @@
 <?php
+// Include the PHP file that fetches the location data and handles reviews
 session_start();
-include '../db/db-config.php';
-$dbConnection = getDatabaseConnection();
+include '../functions/locationdetails.php'; 
+
+// Check if a message is present in the query string
+$message = isset($_GET['message']) ? htmlspecialchars($_GET['message']) : null;
 ?>
 
 <!DOCTYPE html>
@@ -9,126 +12,140 @@ $dbConnection = getDatabaseConnection();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
+    <title><?php echo htmlspecialchars($locationDetails['location_name']); ?></title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/location-style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
 </head>
 <body>
-<header>
-    <?php
-    if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
-        if ($_SESSION['role'] == 1) {
-            include 'navbar_in.php';
+    <header>
+        <?php 
+        // Check if user is logged in and assign the appropriate navbar
+        if (isset($_SESSION['user_id'])) {
+            if ($_SESSION['role'] === 'admin') {
+                include '/admin/admin-navbar.php';  // For admin users
+            } else {
+                include 'navbar_in.php';   // For normal logged-in users
+            }
         } else {
-            include '../view/admin/admin-navbar.php';
+            include 'navbar_guest.php';   // For logged-out users
         }
-    } else {
-        include 'navbar_guest.php';
-    }
-    ?>
-</header>
+        ?>
+    </header>
 
-<h1>Welcome to Your Dashboard</h1>
+    <main>
+        <!-- Display message if available -->
+        <?php if ($message): ?>
+            <div class="message">
+                <?php echo $message; ?>
+            </div>
+        <?php endif; ?>
 
-<?php
-if (!isset($_SESSION['user_id'])) {
-    echo "<p>You must be logged in to view your dashboard.</p>";
-    exit;
-}
-
-$userId = $_SESSION['user_id']; 
-
-// Fetch blogs for the logged-in user
-$blogsQuery = "
-    SELECT blog_id, title, published_date 
-    FROM blog
-    WHERE user_id = ? 
-    ORDER BY published_date DESC";
-$blogsStmt = $dbConnection->prepare($blogsQuery);
-$blogsStmt->bind_param("i", $userId);
-$blogsStmt->execute();
-$blogsResult = $blogsStmt->get_result();
-
-// Fetch reviews for the logged-in user
-$reviewsQuery = "
-    SELECT 
-        reviews.review_id,
-        reviews.review_text,
-        reviews.rating,
-        reviews.review_date,
-        locations.location_name 
-    FROM reviews 
-    INNER JOIN locations ON reviews.location_id = locations.location_id 
-    WHERE reviews.user_id = ? 
-    ORDER BY reviews.review_date DESC";
-$reviewsStmt = $dbConnection->prepare($reviewsQuery);
-$reviewsStmt->bind_param("i", $userId);
-$reviewsStmt->execute();
-$reviewsResult = $reviewsStmt->get_result();
-
-?>
-
-<!-- Blogs Section -->
-<?php
-if ($blogsResult->num_rows > 0) {
-    echo "<h2>Your Blogs</h2>";
-    echo "<table class='dashboard-table'>";
-    echo "<thead><tr><th>Title</th><th>Published Date</th><th>Actions</th></tr></thead>";
-    echo "<tbody>";
-    
-    while ($blog = $blogsResult->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td>" . htmlspecialchars($blog['title']) . "</td>";
-        echo "<td>" . htmlspecialchars($blog['published_date']) . "</td>";
-        echo "<td>
-                <a href='view-blog-post.php?blog_id=" . htmlspecialchars($blog['blog_id']) . "'>View</a>
-                <form action='../functions/delete-blog.php' method='POST' style='display:inline;'>
-                    <input type='hidden' name='blog_id' value='" . htmlspecialchars($blog['blog_id']) . "'>
-                    <button type='submit' onclick=\"return confirm('Are you sure you want to delete this blog?');\">Delete</button>
+        <section class="location-view">
+            <div class="left">
+                <div class="name"><?php echo htmlspecialchars($locationDetails['location_name']); ?></div>
+                <div class="book">
+                    <a href="<?php echo htmlspecialchars($locationDetails['booking_link']); ?>">Book Now</a>
+                </div>
+                <div class="rating">
+                    Average Rating: <span><?php echo htmlspecialchars($locationDetails['average_rating'] ?? 'N/A'); ?></span>
+                </div>
+                <!-- Add to Wishlist Form -->
+                <form action="../functions/addtowishlist.php" method="POST" class="wishlist-form">
+                    <input type="hidden" name="location_id" value="<?php echo htmlspecialchars($locationDetails['location_id']); ?>">
+                    <button type="submit" name="add-to-wishlist" class="wishlist">Add to Wishlist</button>
                 </form>
-              </td>";
-        echo "</tr>";
-    }
+            </div>
 
-    echo "</tbody></table>";
-} else {
-    echo "<p>You have no blogs.</p>";
-}
-?>
+            <div class="right">
+                <div class="Description">
+                    <?php echo htmlspecialchars($locationDetails['description']); ?>
+                </div>
 
-<!-- Reviews Section -->
-<?php
-if ($reviewsResult->num_rows > 0) {
-    echo "<h2>Your Reviews</h2>";
-    echo "<table class='dashboard-table'>";
-    echo "<thead><tr><th>Location</th><th>Rating</th><th>Review</th><th>Date</th><th>Actions</th></tr></thead>";
-    echo "<tbody>";
+                <div class="review-section">
+                    <h1>Reviews</h1>
+                    <div class="rating">
+                        Average Rating: <span><?php 
+                            echo isset($locationDetails['average_rating']) && $locationDetails['average_rating'] !== null 
+                                ? number_format($locationDetails['average_rating'], 1) 
+                                : 'N/A'; 
+                        ?></span>
+                    </div>
+                    <div class="reviews" id="reviewsContainer">
+                        <?php if (empty($locationDetails['reviews'])): ?>
+                            <div class="no-reviews">
+                                <p>No reviews yet. Be the first to review!</p>
+                            </div>
+                        <?php else: ?>
+                            <?php foreach ($locationDetails['reviews'] as $review): ?>
+                                <div class="review-item" data-review-id="<?php echo $review['review_id']; ?>">
+                                    <div class="review-header">
+                                        <img src="<?php 
+                                            echo htmlspecialchars(
+                                                $review['profile_picture'] 
+                                                ? $review['profile_picture'] 
+                                                : '../assets/images/default-profile.png'
+                                            ); 
+                                        ?>" alt="Profile" class="reviewer-profile">
+                                        <div class="reviewer-info">
+                                            <span class="reviewer-name">
+                                                <?php echo htmlspecialchars($review['username']); ?>
+                                            </span>
+                                            <div class="review-rating">
+                                                <?php 
+                                                $rating = $review['rating'];
+                                                for ($i = 1; $i <= 5; $i++) {
+                                                    echo $i <= $rating ? '&#9733;' : '&#9734;';
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                        <span class="review-date">
+                                            <?php echo date('F j, Y', strtotime($review['review_date'])); ?>
+                                        </span>
+                                    </div>
+                                    <div class="review-content">
+                                        <?php echo htmlspecialchars($review['review_text']); ?>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+                    <button class="add-review-btn" data-location-id="<?php echo $locationDetails['location_id']; ?>">Add Review</button>
+                </div>       
+            </div>
+        </section>
 
-    while ($review = $reviewsResult->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td>" . htmlspecialchars($review['location_name']) . "</td>";
-        echo "<td>" . htmlspecialchars($review['rating']) . "/5</td>";
-        echo "<td>" . htmlspecialchars($review['review_text']) . "</td>";
-        echo "<td>" . htmlspecialchars($review['review_date']) . "</td>";
-        echo "<td>
-                <form action='../functions/delete-review.php' method='POST' style='display:inline;'>
-                    <input type='hidden' name='review_id' value='" . htmlspecialchars($review['review_id']) . "'>
-                    <button type='submit' onclick=\"return confirm('Are you sure you want to delete this review?');\">Delete</button>
+        <!-- Modal for Adding Reviews -->
+        <div id="reviewModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Write a Review!</h2>
+                <form class="review-form" id="reviewForm">
+                    <div>
+                        <label>Rating</label>
+                        <div class="star-rating" id="starRating">
+                            <span class="star" data-rating="1">&#9734</span>
+                            <span class="star" data-rating="2">&#9734</span>
+                            <span class="star" data-rating="3">&#9734</span>
+                            <span class="star" data-rating="4">&#9734</span>
+                            <span class="star" data-rating="5">&#9734</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="reviewText">Your Review</label><br>
+                        <textarea id="reviewText" placeholder="Share Your Experience..." required></textarea>
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="button" class="cancel-review">Cancel</button>
+                        <button type="submit" class="submit-review" disabled>Submit Review</button>
+                    </div>
                 </form>
-              </td>";
-        echo "</tr>";
-    }
+            </div>
+        </div>
+    </main>
 
-    echo "</tbody></table>";
-} else {
-    echo "<p>You have no reviews.</p>";
-}
-
-$blogsStmt->close();
-$reviewsStmt->close();
-$dbConnection->close();
-?>
-
-<script src="../assets/js/navbar-in.js"></script>
+    <script src="../assets/js/review.js"></script>
+    <script src="../assets/js/navbar-in.js"></script>
 </body>
 </html>
