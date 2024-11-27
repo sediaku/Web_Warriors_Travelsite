@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 include '../db/db-config.php'; 
 $dbConnection = getDatabaseConnection();
@@ -19,11 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = trim($_POST['password']);
 
     if (empty($username)){
-        $username_error = "";
+        $username_error = "Username is required";
         $error = true;
     } 
     if (empty($password)) {
-        $password_error = "";
+        $password_error = "Password is required";
         $error = true;
     }
 
