@@ -32,16 +32,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function showError(inputElement, message) {
-        let errorElement = inputElement.nextElementSibling;
-        if (!errorElement || !errorElement.classList.contains('validation-error')) {
+        let errorElement = inputElement.closest('.input-field').nextElementSibling;
+        if (!errorElement || !errorElement.classList.contains('text-danger')) {
             errorElement = document.createElement('span');
-            errorElement.classList.add('validation-error');
-            inputElement.parentNode.insertBefore(errorElement, inputElement.nextSibling);
+            errorElement.classList.add('text-danger');
+            inputElement.closest('.input-field').insertAdjacentElement('afterend', errorElement);
         }
         
         errorElement.textContent = message;
-        errorElement.style.color = 'red';
-        inputElement.style.borderColor = 'red';
+        inputElement.style.borderColor = 'red'; // Optional: You can style the input field itself (e.g., red border)
     }
 
     function clearErrors() {
