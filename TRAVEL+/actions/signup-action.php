@@ -30,6 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif (!preg_match("/^[a-zA-Z0-9_\.]+$/", $username)) {
         $username_error = "Username can only contain letters, numbers, underscores, and periods";
         $error = true;
+    } elseif (strlen($username) < 3 || strlen($username) > 20) { // Check username length
+        $username_error = "Username must be between 3 and 20 characters long";
+        $error = true;
     }
 
     // Check if username already exists
@@ -84,7 +87,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = true;
     }
 
-    // If no errors, proceed to insert the user
     if (!$error) {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $date_joined = date('Y-m-d H:i:s');

@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function validateUsername(username) {
-        // Debugging the regex test:
+
         console.log('Validating username with regex:', /^[a-zA-Z0-9_.]{3,20}$/.test(username));
         
         // Username can contain letters, numbers, underscores, and periods
@@ -66,20 +66,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function showError(inputElement, message) {
-        // Create error message element if it doesn't exist
-        let errorElement = inputElement.nextElementSibling;
-        if (!errorElement || !errorElement.classList.contains('validation-error')) {
+        let errorElement = inputElement.closest('.input-field').nextElementSibling;
+        if (!errorElement || !errorElement.classList.contains('text-danger')) {
             errorElement = document.createElement('span');
-            errorElement.classList.add('validation-error');
-            inputElement.parentNode.insertBefore(errorElement, inputElement.nextSibling);
+            errorElement.classList.add('text-danger');
+            inputElement.closest('.input-field').insertAdjacentElement('afterend', errorElement);
         }
         
-        // Set error message
+    
         errorElement.textContent = message;
-        errorElement.style.color = 'red';
-        inputElement.style.borderColor = 'red';
+        inputElement.style.borderColor = 'red'; // Optional: You can style the input field itself (e.g., red border)
     }
-
+    
     function clearErrors() {
         // Remove all existing error messages
         const errorElements = document.querySelectorAll('.validation-error');
