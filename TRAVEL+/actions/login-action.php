@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include '../db/db-config.php'; 
 $dbConnection = getDatabaseConnection();
 
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $_SESSION['role'] = $user['role'];
 
                     // Redirect based on role
-                    if ($user['role'] == 1) {
+                    if ($user['role'] == 2) {
                         header("Location: ../view/admin/admin-dashboard.php");
                     } else {
                         header("Location: ../view/user-dashboard.php");
