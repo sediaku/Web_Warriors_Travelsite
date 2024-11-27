@@ -33,10 +33,6 @@
     padding: 1%;
   }
   
-.wishlist tr:nth-child(even){
-    background-color: rgb(220, 255, 220);
-}
-  
 .wishlist tr:hover {
     background-color: rgb(220, 255, 220);
 }

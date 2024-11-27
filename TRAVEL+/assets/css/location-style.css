@@ -165,15 +165,17 @@ section{
     color: white;
 }
 
-.reviews{
+#reviewsContainer{
     border:none;
 }
+
 .review-item {
-    border-color: #777;
+    border: 0.1rem solid #777;
     padding: 1%;
 }
 
 .reviewer-name {
+    font-size: 90%;
     font-weight: bold;
     color: var(--primary-color);
 }
@@ -184,7 +186,7 @@ section{
 
 .review-date {
     color: #777;
-    font-size: 90%;
+    font-size: 65%;
 }
 
 .review-content {

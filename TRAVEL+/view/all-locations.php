@@ -56,6 +56,7 @@ try {
             <?php if (!empty($locations)): ?>
                 <?php foreach ($locations as $location): ?>
                     <div class="location-card">
+                        <img src ="../assets/images/default-image.png" class = "brief-view">
                         <div class="location-header">
                             <h2><?php echo htmlspecialchars($location['location_name']); ?></h2>
                         </div>
