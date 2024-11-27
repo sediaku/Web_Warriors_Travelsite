@@ -7,8 +7,8 @@
             </button>
             
             <div class="account-dropdown" id="accountDropdown">
-                <a href="/Web_Warriors_Travelsite/TRAVEL+/view/login.php">Login</a>
-                <a href="/Web_Warriors_Travelsite/TRAVEL+/view/signup.php">Sign Up</a>
+                <a href="login.php">Login</a>
+                <a href="signup.php">Sign Up</a>
             </div>
         </div>
         

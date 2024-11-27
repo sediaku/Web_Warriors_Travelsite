@@ -85,7 +85,7 @@ if (isset($_SESSION['user_id'])) {
             <?php include 'view/footer.php'; ?>
         </footer>
 
-        <script src="assets/js/navbar-guest.js"></script>
+        <script src="assets/js/navbar-index.js"></script>
     </body>
 </html>
 

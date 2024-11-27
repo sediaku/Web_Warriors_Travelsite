@@ -23,11 +23,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Create account modal links
     const loginLink = document.createElement('a');
-    loginLink.href = 'login.php';
+    loginLink.href = 'view/login.php';
     loginLink.textContent = 'Login';
 
     const signupLink = document.createElement('a');
-    signupLink.href = 'signup.php';
+    signupLink.href = 'view/signup.php';
     signupLink.textContent = 'Sign Up';
 
     accountModal.appendChild(loginLink);
