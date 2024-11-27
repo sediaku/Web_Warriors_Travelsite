@@ -1,76 +1,51 @@
-.locations-list {
-    max-width: 800px;
-    margin: 50px auto;
+/*RECENT GENERIC STYLING FOR THE ALL-LOCATIONS.PHP CODE */
+
+.locations-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
     padding: 20px;
 }
 
-.locations-list h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.location-items {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.location-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    margin-bottom: 15px;
+.location-card {
     border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    transition: background-color 0.3s;
+    border-radius: 8px;
+    padding: 15px;
+    background: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.location-item:hover {
-    background-color: #f1f1f1;
-}
-
-.location-info h2 {
-    margin: 0;
+.location-header h2 {
     font-size: 1.5rem;
-    color: #333;
+    margin: 0;
 }
 
-.location-info p {
+.location-description {
     margin: 10px 0;
-    color: #666;
-    font-size: 0.9rem;
-}
-
-.details-btn,
-.book-btn {
-    text-decoration: none;
-    color: #fff;
-    padding: 10px 15px;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    transition: background-color 0.3s;
-}
-
-.details-btn {
-    background-color: #007bff;
-    margin-right: 10px;
-}
-
-.details-btn:hover {
-    background-color: #0056b3;
-}
-
-.book-btn {
-    background-color: #28a745;
-}
-
-.book-btn:hover {
-    background-color: #218838;
 }
 
 .location-actions {
-    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.details-btn,
+.wishlist-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.details-btn {
+    background-color: #084608;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+}
+
+.wishlist-btn {
+    background-color: #128b12;
+    color: white;
 }
