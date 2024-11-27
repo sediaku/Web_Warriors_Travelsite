@@ -23,7 +23,7 @@ $message = isset($_GET['message']) ? htmlspecialchars($_GET['message']) : null;
         // Check if user is logged in and assign the appropriate navbar
         if (isset($_SESSION['user_id'])) {
             if ($_SESSION['role'] == 2) {
-                include '/admin/admin-navbar.php';  // For admin users
+                include 'admin/admin-navbar.php';  // For admin users
             } else {
                 include 'navbar_in.php';   // For normal logged-in users
             }
@@ -146,6 +146,5 @@ $message = isset($_GET['message']) ? htmlspecialchars($_GET['message']) : null;
     </main>
 
     <script src="../assets/js/review.js"></script>
-    <script src="../assets/js/navbar-in.js"></script>
 </body>
 </html>

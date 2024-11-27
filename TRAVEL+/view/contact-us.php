@@ -14,18 +14,18 @@ session_start();
 
     <body>
         <header>
-        <?php 
-            // Check if user is logged in and assign the appropriate navbar
-            if (isset($_SESSION['user_id'])) {
-                if ($_SESSION['role'] == 2) {
-                    include '/admin/admin-navbar.php';  // For admin users
+            <?php 
+                // Check if user is logged in and assign the appropriate navbar
+                if (isset($_SESSION['user_id'])) {
+                    if ($_SESSION['role'] == 2) {
+                        include 'admin/admin-navbar.php';  // For admin users
+                    } else {
+                        include 'navbar_in.php';   // For normal logged-in users
+                    }
                 } else {
-                    include 'navbar_in.php';   // For normal logged-in users
+                    include 'navbar_guest.php';   // For logged-out users
                 }
-            } else {
-                include 'navbar_guest.php';   // For logged-out users
-            }
-        ?>
+            ?>
         </header>
 
         <section class="contact-us">

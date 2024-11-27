@@ -54,18 +54,18 @@ if ($result->num_rows === 1) {
     </head>
     <body>
         <header>
-            <?php
-                // Check if user is logged in and assign the appropriate navbar
-                if (isset($_SESSION['user_id'])) {
-                    if ($_SESSION['role'] == 2) {
-                        include '/admin/admin-navbar.php';  // For admin users
-                    } else {
-                        include 'navbar_in.php';   // For normal logged-in users
-                    }
+        <?php 
+            // Check if user is logged in and assign the appropriate navbar
+            if (isset($_SESSION['user_id'])) {
+                if ($_SESSION['role'] == 2) {
+                    include 'admin/admin-navbar.php';  // For admin users
                 } else {
-                    include 'navbar_guest.php';   // For logged-out users
+                    include 'navbar_in.php';   // For normal logged-in users
                 }
-            ?>
+            } else {
+                include 'navbar_guest.php';   // For logged-out users
+            }
+        ?>
         </header>
 
         <section class="blog-view">

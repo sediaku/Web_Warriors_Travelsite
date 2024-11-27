@@ -29,4 +29,4 @@
     </div>
 </div>
 
-<script src="../../assets/js/admin-navbar.js"></script>
+<script src="../../assets/js/dmin-navbar.js"></script>

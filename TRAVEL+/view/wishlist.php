@@ -16,16 +16,17 @@ $dbConnection = getDatabaseConnection();
 </head>
 <body>
     <header>
-        <?php
-        if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
-            if ($_SESSION['role'] == 1) {
-                include 'navbar_in.php';
+        <?php 
+            // Check if user is logged in and assign the appropriate navbar
+            if (isset($_SESSION['user_id'])) {
+                if ($_SESSION['role'] == 2) {
+                    include 'admin/admin-navbar.php';  // For admin users
+                } else {
+                    include 'navbar_in.php';   // For normal logged-in users
+                }
             } else {
-                include '../view/admin/admin-navbar.php';
+                include 'navbar_guest.php';   // For logged-out users
             }
-        } else {
-            include 'navbar_guest.php';
-        }
         ?>
     </header>
     <h1>My Wishlist</h1>
