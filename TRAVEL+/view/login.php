@@ -1,5 +1,8 @@
 <?php
+
 session_start();
+include '../actions/login-action.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -25,11 +28,13 @@ session_start();
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username" required>
                 </div>
+                <span class="text-danger"><?= $username_error ?></span>
 
                 <div class = "input-field">
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" required>
                 </div>
+                <span class="text-danger"><?= $password_error ?></span>
 
 
                 <button type = "submit" class = "button">Log In</button>
