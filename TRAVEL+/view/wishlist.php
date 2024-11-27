@@ -21,6 +21,7 @@ $dbConnection = getDatabaseConnection();
             if (isset($_SESSION['user_id'])) {
                 if ($_SESSION['role'] == 2) {
                     include 'admin/admin-navbar.php';  // For admin users
+ 
                 } else {
                     include 'navbar_in.php';   // For normal logged-in users
                 }

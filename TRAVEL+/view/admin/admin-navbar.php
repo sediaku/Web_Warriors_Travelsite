@@ -29,4 +29,4 @@
     </div>
 </div>
 
-<script src="../../assets/js/admin-navbar.js"></script>
+<script src="/Web_Warriors_Travelsite/TRAVEL+/assets/js/admin-navbar.js"></script>
