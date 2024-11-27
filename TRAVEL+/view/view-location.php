@@ -22,7 +22,7 @@ $message = isset($_GET['message']) ? htmlspecialchars($_GET['message']) : null;
         <?php 
         // Check if user is logged in and assign the appropriate navbar
         if (isset($_SESSION['user_id'])) {
-            if ($_SESSION['role'] === 'admin') {
+            if ($_SESSION['role'] == 2) {
                 include '/admin/admin-navbar.php';  // For admin users
             } else {
                 include 'navbar_in.php';   // For normal logged-in users

@@ -53,6 +53,6 @@
         <footer>
             <?php include 'footer.php'; ?>
         </footer>
-        <script src="assets/js/signup-validation.js"></script>
+        <script src="../assets/js/signup-validation.js"></script>
     </body>
 </html>

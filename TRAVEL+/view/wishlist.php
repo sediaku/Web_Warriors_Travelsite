@@ -108,6 +108,5 @@ $dbConnection = getDatabaseConnection();
             });
         });
     </script>
-    <script src="../assets/js/navbar-in.js"></script>
 </body>
 </html>

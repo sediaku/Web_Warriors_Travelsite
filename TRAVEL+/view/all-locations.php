@@ -29,7 +29,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
+    <title>All Locations</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/all-locations-style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
@@ -39,7 +39,7 @@ try {
     <?php         
         // Check if user is logged in and assign the appropriate navbar
         if (isset($_SESSION['user_id'])) {
-            if ($_SESSION['role'] === 'admin') {
+            if ($_SESSION['role'] == 2) {
                 include '/admin/admin-navbar.php';  // For admin users
             } else {
                 include 'navbar_in.php';   // For normal logged-in users
