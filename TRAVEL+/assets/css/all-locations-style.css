@@ -1,51 +1,77 @@
 /*RECENT GENERIC STYLING FOR THE ALL-LOCATIONS.PHP CODE */
-
-.locations-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+.all-locations {
     padding: 20px;
 }
 
+.locations-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Location Card Styles */
 .location-card {
+    background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 300px;
     padding: 15px;
-    background: #f9f9f9;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.location-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .location-header h2 {
     font-size: 1.5rem;
-    margin: 0;
+    color: #333;
+    margin-bottom: 10px;
 }
 
 .location-description {
-    margin: 10px 0;
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 20px;
+    line-height: 1.4;
 }
 
+/* Action Buttons */
 .location-actions {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .details-btn,
 .wishlist-btn {
+    background-color: #007bff;
+    color: #fff;
     padding: 10px 15px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.details-btn:hover,
+.wishlist-btn:hover {
+    background-color: #0056b3;
 }
 
 .details-btn {
-    background-color: #084608;
-    color: white;
-    text-decoration: none;
-    text-align: center;
+    background-color: #28a745;
 }
 
-.wishlist-btn {
-    background-color: #128b12;
-    color: white;
+.details-btn:hover {
+    background-color: #218838;
 }
+
+
+
