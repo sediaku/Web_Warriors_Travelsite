@@ -25,45 +25,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $password_error = "Password is required";
         $error = true;
     }
+    if (!$error) {
+        try {
+            $dbConnection = getDatabaseConnection();
 
-    if(!$error){
-        // Query to check the username and fetch user details
-        $query = "SELECT user_id, username, password, role FROM users WHERE username = ?";
-        $stmt = $dbConnection->prepare($query);
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
+            // Query to fetch user details
+            $query = "SELECT user_id, username, password, role FROM users WHERE username = ?";
+            $stmt = $dbConnection->prepare($query);
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-        if ($result->num_rows === 1) {
-            $user = $result->fetch_assoc();
+            if ($result->num_rows === 1) {
+                $user = $result->fetch_assoc();
 
-            // Verify the password
-            if (password_verify($password, $user['password'])) {
-                // Set session variables
-                $_SESSION['user_id'] = $user['user_id'];
-                $_SESSION['username'] = $user['username'];
-                $_SESSION['role'] = $user['role'];
+                // Verify password
+                if (password_verify($password, $user['password'])) {
+                    // Regenerate session and set session variables
+                    session_regenerate_id(true);
+                    $_SESSION['user_id'] = $user['user_id'];
+                    $_SESSION['username'] = $user['username'];
+                    $_SESSION['role'] = $user['role'];
 
-                // Redirect based on user role
-                if ($user['role'] == 1) {
-                    header("Location: ../view/user-dashboard.php");
+                    // Redirect based on role
+                    if ($user['role'] === 'admin') {
+                        header("Location: ../view/admin/admin-dashboard.php");
+                    } else {
+                        header("Location: ../view/user-dashboard.php");
+                    }
                     exit;
-                }else{
-                    header("Location: ../view/admin/admin-dashboard.php");
-                    exit;
-
+                } else {
+                    $password_error = "Invalid password.";
                 }
-                
             } else {
-                $password_error = "Invalid password";
-                $error = true;
+                $username_error = "Invalid username or password.";
             }
-        } else {
-            $password_error = "Invalid username or password.";
+            $stmt->close();
+            $dbConnection->close();
+        } catch (Exception $e) {
+            die("Error: " . htmlspecialchars($e->getMessage()));
         }
     }
-
-
-    $stmt->close();
 }
+
+
 ?>
