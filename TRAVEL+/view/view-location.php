@@ -64,13 +64,7 @@ $message = isset($_GET['message']) ? htmlspecialchars($_GET['message']) : null;
 
                 <div class="review-section">
                     <h1>Reviews</h1>
-                    <div class="rating">
-                        Average Rating: <span><?php 
-                            echo isset($locationDetails['average_rating']) && $locationDetails['average_rating'] !== null 
-                                ? number_format($locationDetails['average_rating'], 1) 
-                                : 'N/A'; 
-                        ?></span>
-                    </div>
+                    
                     <div class="reviews" id="reviewsContainer">
                         <?php if (empty($locationDetails['reviews'])): ?>
                             <div class="no-reviews">
@@ -78,35 +72,25 @@ $message = isset($_GET['message']) ? htmlspecialchars($_GET['message']) : null;
                             </div>
                         <?php else: ?>
                             <?php foreach ($locationDetails['reviews'] as $review): ?>
-                                <div class="review-item" data-review-id="<?php echo $review['review_id']; ?>">
-                                    <div class="review-header">
-                                        <img src="<?php 
-                                            echo htmlspecialchars(
-                                                $review['profile_picture'] 
-                                                ? $review['profile_picture'] 
-                                                : '../assets/images/default-profile.png'
-                                            ); 
-                                        ?>" alt="Profile" class="reviewer-profile">
-                                        <div class="reviewer-info">
-                                            <span class="reviewer-name">
-                                                <?php echo htmlspecialchars($review['username']); ?>
-                                            </span>
-                                            <div class="review-rating">
-                                                <?php 
-                                                $rating = $review['rating'];
-                                                for ($i = 1; $i <= 5; $i++) {
-                                                    echo $i <= $rating ? '&#9733;' : '&#9734;';
-                                                }
-                                                ?>
-                                            </div>
-                                        </div>
-                                        <span class="review-date">
-                                            <?php echo date('F j, Y', strtotime($review['review_date'])); ?>
-                                        </span>
-                                    </div>
-                                    <div class="review-content">
+                                <div class="review-item" data-review-id="<?php echo $review['review_id']; ?>">      
+                                    <span class="reviewer-name">
+                                        <?php echo htmlspecialchars($review['username']); ?>
+                                    </span>
+                                    <span class="review-rating">
+                                        <?php 
+                                        $rating = $review['rating'];
+                                        for ($i = 1; $i <= 5; $i++) {
+                                            echo $i <= $rating ? '&#9733;' : '&#9734;';
+                                        }
+                                        ?>
+                                    </span>
+                                    <p class="review-date">
+                                        <?php echo date('F j, Y', strtotime($review['review_date'])); ?>
+                                    </p>
+                                      
+                                    <p class="review-content">
                                         <?php echo htmlspecialchars($review['review_text']); ?>
-                                    </div>
+                                    </p>
                                 </div>
                             <?php endforeach; ?>
                         <?php endif; ?>
