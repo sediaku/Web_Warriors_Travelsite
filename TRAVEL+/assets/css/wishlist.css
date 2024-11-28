@@ -7,6 +7,7 @@
 .wishlist a{
     text-decoration: none;
     color: rgb(11, 88, 11);
+    font-size: 70%;
     margin-right: 2%;
     width: 8%;
     height: 100%;
@@ -14,6 +15,7 @@
 
 .wishlist button{
     background: none;
+    font-size: 70%;
     border: none;
     color: red;
     margin-right: 2%;
@@ -43,17 +45,23 @@
     font-weight: bold;
 }
 
+.wl {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
 
 /* Tablet Media Query */
 @media screen and (max-width: 768px) {
-    .wishlist, h1{
+    .wl{
         font-size: 200%;
     }
 }
 
 /* Mobile Media Query */
 @media screen and (max-width: 480px) {
-    .wishlist, h1{
+    .wl{
         font-size: 200%;
     }
 }

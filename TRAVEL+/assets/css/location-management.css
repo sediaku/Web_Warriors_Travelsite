@@ -1,4 +1,5 @@
 /* General Table Styles */
+
 .manage-locations table {
     margin-left: 2.5%;
     width: 95%;
@@ -8,6 +9,7 @@
 
 .manage-locations a {
     text-decoration: none;
+    font-size: 70%;
     color: rgb(11, 88, 11);
     margin-right: 2%;
     width: 8%;
@@ -17,6 +19,7 @@
 .manage-locations button {
     background: none;
     border: none;
+    font-size: 70%;
     color: red;
     margin-right: 2%;
     width: 8%;

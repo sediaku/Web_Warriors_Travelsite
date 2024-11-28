@@ -1,9 +1,7 @@
 <?php
-// Include the PHP file that fetches the location data and handles reviews
 session_start();
 include '../functions/locationdetails.php'; 
 
-// Check if a message is present in the query string
 $message = isset($_GET['message']) ? htmlspecialchars($_GET['message']) : null;
 ?>
 
@@ -55,6 +53,9 @@ $message = isset($_GET['message']) ? htmlspecialchars($_GET['message']) : null;
                     <input type="hidden" name="location_id" value="<?php echo htmlspecialchars($locationDetails['location_id']); ?>">
                     <button type="submit" name="add-to-wishlist" class="wishlist">Add to Wishlist</button>
                 </form>
+
+                <button class="view-pictures">View Pictures</button>
+
             </div>
 
             <div class="right">

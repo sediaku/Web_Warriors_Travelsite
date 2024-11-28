@@ -71,7 +71,7 @@ if ($result->num_rows === 1) {
         <section class="blog-view">
             <div class="left">
                 <div class="author">
-                    <a href="profile-page.php?user_id=<?php echo htmlspecialchars($blog['user_id']); ?>">
+                    <a href="view-profile.php?user_id=<?php echo htmlspecialchars($blog['user_id']); ?>">
                         <span class="material-symbols-outlined">person</span>
                         <?php echo htmlspecialchars($blog['author_name']); ?>
                     </a>
@@ -97,89 +97,12 @@ if ($result->num_rows === 1) {
                     <h1><?php echo htmlspecialchars($blog['title']); ?></h1>
                     <p><?php echo nl2br(htmlspecialchars($blog['content'])); ?></p>
                 </div>
-                <div class="comment-section">
-                    <h1>Comments</h1>
-                    <div id="comments" class="comments">
-                        <!-- Comments will be loaded dynamically -->
-                    </div>
-                    <button id="add-comment-btn" class="add-comment-btn">Add Comment</button>
-                </div>
             </div>
         </section>
-
-        <!-- Comment Modal -->
-        <div id="commentModal" class="modal">
-            <div class="modal-content">
-                <span id="closeModal" class="close">&times;</span>
-                <div class="modal-header">
-                    <h2>Add a Comment</h2>
-                </div>
-                <form id="commentForm" class="comment-form">
-                    <textarea id="commentText" class="comment-textarea" placeholder="Type your comment here!" required></textarea>
-                    <div class="modal-footer">
-                        <button type="button" id="cancelComment" class="btn btn-cancel">Cancel</button>
-                        <button type="submit" class="btn btn-submit">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
 
         <footer>
             <?php include 'footer.php'; ?>
         </footer>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                // Load comments dynamically
-                const commentsDiv = document.getElementById('comments');
-                fetch(`../api/get-comments.php?blog_id=<?php echo $blogId; ?>`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            commentsDiv.innerHTML = data.comments.map(comment => `
-                                <div class="comment">
-                                    <p>${comment.text}</p>
-                                    <span>— ${comment.author} on ${comment.date}</span>
-                                </div>
-                            `).join('');
-                        } else {
-                            commentsDiv.innerHTML = '<p>No comments yet.</p>';
-                        }
-                    });
-
-                // Handle Add Comment Modal
-                const commentModal = document.getElementById('commentModal');
-                const addCommentBtn = document.getElementById('add-comment-btn');
-                const closeModal = document.getElementById('closeModal');
-                const cancelComment = document.getElementById('cancelComment');
-
-                addCommentBtn.addEventListener('click', () => commentModal.style.display = 'block');
-                closeModal.addEventListener('click', () => commentModal.style.display = 'none');
-                cancelComment.addEventListener('click', () => commentModal.style.display = 'none');
-
-                // Submit comment
-                const commentForm = document.getElementById('commentForm');
-                commentForm.addEventListener('submit', event => {
-                    event.preventDefault();
-                    const commentText = document.getElementById('commentText').value;
-
-                    fetch('../api/add-comment.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ blog_id: <?php echo $blogId; ?>, text: commentText }),
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                location.reload();
-                            } else {
-                                alert('Failed to add comment.');
-                            }
-                        });
-                });
-            });
-        </script>
     </body>
 </html>

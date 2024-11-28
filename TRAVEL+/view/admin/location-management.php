@@ -75,7 +75,7 @@ $locationsResult = $locationsStmt->get_result();
                             ?>
                         </td>
                         <td>
-                            <a href="../view-location.php?location_id=<?php echo htmlspecialchars($location['location_id']); ?>">View More</a>
+                            <a href="../view-location.php?location_id=<?php echo htmlspecialchars($location['location_id']); ?>">View</a>
                             <a href="../edit-location.php?location_id=<?php echo htmlspecialchars($location['location_id']); ?>">Edit</a>
                             <form action="../../functions/delete-location.php" method="POST" style="display:inline;">
                                 <input type="hidden" name="location_id" value="<?php echo htmlspecialchars($location['location_id']); ?>">

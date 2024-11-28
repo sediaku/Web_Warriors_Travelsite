@@ -30,7 +30,7 @@ $dbConnection = getDatabaseConnection();
             }
         ?>
     </header>
-    <h1>My Wishlist</h1>
+    <h1 class = "wl">My Wishlist</h1>
 
     <?php
     if (!isset($_SESSION['user_id'])) {
@@ -67,12 +67,8 @@ $dbConnection = getDatabaseConnection();
             <tr>
                 <td>{$locationName}</td>
                 <td>
-                    <a href='view-location.php?location_id={$locationId}'>
-                        <span class='material-symbols-outlined'>visibility</span>
-                    </a>
-                    <button class='delete-btn' data-location-id='{$locationId}'>
-                        <span class='material-symbols-outlined'>delete</span>
-                    </button>
+                    <a href='view-location.php?location_id={$locationId}'>View</a>
+                    <button class='delete-btn' data-location-id='{$locationId}'>Remove</button>
                 </td>
             </tr>";
         }
