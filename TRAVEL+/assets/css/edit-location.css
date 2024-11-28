@@ -8,9 +8,9 @@ main {
 /* Form Styles */
 form {
     background-color: #f4f4f4; /* Light grey background */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    border-radius: 0.4rem;
+    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1);
 }
 
 form label {

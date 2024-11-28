@@ -5,7 +5,7 @@
 
 .locations-container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns:  repeat(auto-fit, minmax(13rem, 1fr));
     gap: 1rem;
 }
 
@@ -86,17 +86,26 @@
 
 
 
+
 /* Tablet Media Query */
 @media screen and (max-width: 768px) {   
-    .locations-container {
-        grid-template-columns: 1fr;
+    .location-header h2 {
+        font-size: 150%;
+    }
+    
+    .location-description {
+        font-size: 120%;
     }
 }
 
 
 /* Mobile Media Query */
 @media screen and (max-width: 480px) {
-    .locations-container {
-        grid-template-columns: 1fr;
+    .location-header h2 {
+        font-size: 150%;
+    }
+    
+    .location-description {
+        font-size: 120%;
     }
 }
