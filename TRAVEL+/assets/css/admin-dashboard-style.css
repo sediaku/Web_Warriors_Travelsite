@@ -33,12 +33,13 @@ section div{
 .stats div{
     border: 0.1rem solid rgb(8, 70, 8);
     border-radius: 0.5rem;
-    padding: 2%;
+    padding: 4%;
 }
 
 .stats div p{
     margin: 1%;
     text-align: center;
+    font-size: 200%;
 }
 
 .stats div:hover{

@@ -125,7 +125,6 @@ document.addEventListener('DOMContentLoaded', function(){
                 // Set inner HTML for new review
                 newReview.innerHTML = `
                     <div class="review-header">
-                        <img src="../assets/images/default-profile.png" alt="Profile" class="reviewer-profile">
                         <div class="reviewer-info">
                             <span class="reviewer-name">${data.username}</span>
                             <div class="review-rating">

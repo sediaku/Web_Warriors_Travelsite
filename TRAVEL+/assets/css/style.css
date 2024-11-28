@@ -2,6 +2,10 @@ html {
     font-size: 1.51vw;
 }
 
+header{
+    position: absolute;
+}
+
 .topnav {
     display: grid;
     grid-template-columns: 1fr 2fr;
