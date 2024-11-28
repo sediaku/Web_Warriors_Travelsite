@@ -5,10 +5,22 @@
 
 .locations-container {
     display: grid;
-    grid-template-columns:  repeat(auto-fit, minmax(13rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
     gap: 1rem;
 }
 
+.search-container{
+    margin-bottom: 1.5rem;
+}
+
+.search-container input{
+    width: 30%;
+    border: 0.1rem solid rgb(8, 70, 8);
+    border-radius: 0.2rem;
+    padding: 2%;
+    height: 0.05rem;
+    font-size: 100%;
+}
 
 
 /* Location Card Styles */
@@ -96,6 +108,12 @@
     .location-description {
         font-size: 120%;
     }
+
+    .search-container input{
+        font-size: 130%;
+        width: 95%;
+        height: 0.5rem;
+    }
 }
 
 
@@ -107,5 +125,11 @@
     
     .location-description {
         font-size: 120%;
+    }
+
+    .search-container input{
+        font-size: 130%;
+        width: 95%;
+        height: 0.5rem;
     }
 }

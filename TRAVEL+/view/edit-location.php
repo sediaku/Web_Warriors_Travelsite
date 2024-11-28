@@ -50,14 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             description = ?, 
             category = ?, 
             opening_hours = ?, 
-            booking_allowed = ?, 
             contact_info = ?, 
             price_range = ?, 
             booking_link = ?
         WHERE location_id = ?";
     $updateStmt = $dbConnection->prepare($updateQuery);
     $updateStmt->bind_param(
-        "ssssssssssss",
+        "sssssssssss",
         $locationName,
         $address,
         $city,
@@ -65,7 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $description,
         $category,
         $openingHours,
-        $bookingAllowed,
         $contactInfo,
         $priceRange,
         $bookingLink,
@@ -132,6 +130,9 @@ $dbConnection->close();
 
         <label for="booking_link">Booking Link:</label>
         <input type="text" id="booking_link" name="booking_link" value="<?php echo htmlspecialchars($location['booking_link']); ?>" required>
+
+        <label for="picture">Add Pictures:</label>
+       
 
         <button type="submit">Save Changes</button>
     </form>
