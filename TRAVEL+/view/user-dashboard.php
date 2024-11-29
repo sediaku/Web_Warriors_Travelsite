@@ -110,11 +110,26 @@ $reviewsResult = $reviewsStmt->get_result();
             <span class="close-button" onclick="closeModal()">&times;</span>
             <h2>Add New Blog</h2>
             <form action="../functions/add-blog.php" method="POST">
-                <label for="blogTitle">Blog Title:</label>
+                    <label for="blogTitle">Blog Title:</label>
                 <input type="text" id="blogTitle" name="blog_title" required>
 
                 <label for="blogContent">Content:</label>
                 <textarea id="blogContent" name="blog_content" rows="5" required></textarea>
+
+                <label for="blogLocation">Location:</label>
+                <select id="blogLocation" name="location_name" required>
+                    <option value="">-- Select Location --</option>
+                    <?php
+                    // Fetch all locations from the database
+                    $locationsQuery = "SELECT location_id, location_name FROM locations ORDER BY location_name ASC";
+                    $locationsResult = $dbConnection->query($locationsQuery);
+
+                    while ($location = $locationsResult->fetch_assoc()) {
+                        $locationName = htmlspecialchars($location['location_name']);
+                        echo "<option value='{$locationName}'>{$locationName}</option>";
+                    }
+                    ?>
+                </select>
 
                 <button type="submit" class="submit-button">Submit</button>
             </form>
@@ -125,6 +140,7 @@ $reviewsResult = $reviewsStmt->get_result();
     <div class="add-blog-button">
         <button class="add-blog-link" onclick="openModal()">Add New Blog</button>
     </div>
+
 
     <!-- Reviews Section -->
     <?php
