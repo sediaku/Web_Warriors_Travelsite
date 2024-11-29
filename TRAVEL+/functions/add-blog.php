@@ -9,6 +9,9 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $userId = $_SESSION['user_id'];
+// Get the user's role from the session
+$userRole = $_SESSION['role']; 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve user input
     $blogTitle = trim($_POST['blog_title']);
@@ -44,7 +47,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($blogStmt->execute()) {
         echo "Blog added successfully.";
-        header("Location: ../view/user-dashboard.php");
+
+        // Redirect based on user role
+        if ($userRole == 1) {
+            header("Location: ../view/user-dashboard.php");
+        } elseif ($userRole == 2) {
+            header("Location: ../view/admin/admin-dashboard.php");
+        }
+
         exit;
     } else {
         echo "Error adding blog: " . $dbConnection->error;
@@ -55,4 +65,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dbConnection->close();
 }
 ?>
-

@@ -1,8 +1,10 @@
 <?php
+// Include database connection
 include '../../db/db-config.php';
 $dbConnection = getDatabaseConnection();
 session_start();
 
+// Check if the user is an admin
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 2) {
     die("Access denied. You do not have permission to view this page.");
 }
@@ -32,6 +34,16 @@ $totalBlogsQuery = "SELECT COUNT(*) AS total_blogs FROM blog";
 $totalBlogsResult = $dbConnection->query($totalBlogsQuery);
 $totalBlogs = $totalBlogsResult->fetch_assoc()['total_blogs'];
 
+// Fetch top 5 users based on blog posts
+$topUsersQuery = "
+    SELECT u.user_id, u.username, COUNT(b.blog_id) AS total_posts
+    FROM users u
+    LEFT JOIN blog b ON u.user_id = b.user_id
+    GROUP BY u.user_id
+    ORDER BY total_posts DESC
+    LIMIT 5";
+$topUsersResult = $dbConnection->query($topUsersQuery);
+
 // Fetch user's blog posts
 $userBlogsQuery = "
     SELECT blog_id, title, published_date 
@@ -54,16 +66,6 @@ $userReviewsStmt = $dbConnection->prepare($userReviewsQuery);
 $userReviewsStmt->bind_param("i", $userId);
 $userReviewsStmt->execute();
 $userReviewsResult = $userReviewsStmt->get_result();
-
-// Fetch top users (most reviews and blogs)
-$topUsersQuery = "
-    SELECT u.username, 
-           (SELECT COUNT(*) FROM reviews WHERE reviews.user_id = u.user_id) AS total_reviews, 
-           (SELECT COUNT(*) FROM blog WHERE blog.user_id = u.user_id) AS total_blogs 
-    FROM users u 
-    ORDER BY total_reviews + total_blogs DESC 
-    LIMIT 10";
-$topUsersResult = $dbConnection->query($topUsersQuery);
 ?>
 
 <!DOCTYPE html>
@@ -103,66 +105,162 @@ $topUsersResult = $dbConnection->query($topUsersQuery);
             </div>
         </div>
 
-        <div class="personal">
-            <h1>My Posts</h1>
-            <div class="posts">
-                <?php if ($userBlogsResult->num_rows > 0): ?>
-                    <ul>
-                        <?php while ($blog = $userBlogsResult->fetch_assoc()): ?>
-                            <li>
-                                <a href="../view-blog-post.php?blog_id=<?php echo $blog['blog_id']; ?>">
-                                    <?php echo htmlspecialchars($blog['title']); ?>
-                                </a> - <?php echo htmlspecialchars($blog['published_date']); ?>
-                            </li>
+        <!-- Top 5 Users Section -->
+        <div class="top-users">
+            <h2>Top 5 Users</h2>
+            <?php if ($topUsersResult->num_rows > 0): ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Total Blog Posts</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($user = $topUsersResult->fetch_assoc()): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($user['username']); ?></td>
+                                <td><?php echo htmlspecialchars($user['total_posts']); ?></td>
+                            </tr>
                         <?php endwhile; ?>
-                    </ul>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <p>No top users found.</p>
+            <?php endif; ?>
+        </div>
+
+        <!-- User's Blogs Section -->
+        <div class="personal">
+            <h1>My Blogs</h1>
+            <div class="manage-blogs">
+                <?php if ($userBlogsResult->num_rows > 0): ?>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Published Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($blog = $userBlogsResult->fetch_assoc()): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($blog['title']); ?></td>
+                                    <td><?php echo htmlspecialchars($blog['published_date']); ?></td>
+                                    <td>
+                                        <a href="../view-blog-post.php?blog_id=<?php echo $blog['blog_id']; ?>">View More</a>
+                                        <form method="POST" action="../../functions/delete-blog.php" style="display:inline;">
+                                            <input type="hidden" name="blog_id" value="<?php echo $blog['blog_id']; ?>">
+                                            <button type="submit" class="delete-button">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
                 <?php else: ?>
                     <p>You have no blogs.</p>
                 <?php endif; ?>
             </div>
+            <!-- Add Blog Button and Modal -->
+            <div class="add-blog-button">
+                <button class="add-blog-link" onclick="openModal()">Add New Blog</button>
+            </div>
 
+            <!-- Add Blog Modal -->
+            <div id="addBlogModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeModal()">&times;</span>
+                    <h2>Add New Blog</h2>
+                    <form action="../functions/add-blog.php" method="POST">
+                        <label for="blogTitle">Blog Title:</label>
+                        <input type="text" id="blogTitle" name="blog_title" required>
+
+                        <label for="blogContent">Content:</label>
+                        <textarea id="blogContent" name="blog_content" rows="5" required></textarea>
+
+                        <label for="blogLocation">Location:</label>
+                        <select id="blogLocation" name="location_name" required>
+                            <option value="">-- Select Location --</option>
+                            <?php
+                            // Fetch all locations from the database
+                            $locationsQuery = "SELECT location_id, location_name FROM locations ORDER BY location_name ASC";
+                            $locationsResult = $dbConnection->query($locationsQuery);
+
+                            while ($location = $locationsResult->fetch_assoc()) {
+                                $locationName = htmlspecialchars($location['location_name']);
+                                echo "<option value='{$locationName}'>{$locationName}</option>";
+                            }
+                            ?>
+                        </select>
+
+                        <button type="submit" class="submit-button">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Reviews Section -->
             <h1>My Reviews</h1>
-            <div class="reviews">
+            <div class="manage-reviews">
                 <?php if ($userReviewsResult->num_rows > 0): ?>
-                    <ul>
-                        <?php while ($review = $userReviewsResult->fetch_assoc()): ?>
-                            <li><?php echo htmlspecialchars($review['location_name']); ?> - 
-                                <?php echo htmlspecialchars($review['rating']); ?>/5</li>
-                        <?php endwhile; ?>
-                    </ul>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Location</th>
+                                <th>Review Text</th>
+                                <th>Rating</th>
+                                <th>Review Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($review = $userReviewsResult->fetch_assoc()): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($review['location_name']); ?></td>
+                                    <td><?php echo htmlspecialchars($review['review_text']); ?></td>
+                                    <td><?php echo htmlspecialchars($review['rating']); ?>/5</td>
+                                    <td><?php echo htmlspecialchars($review['review_date']); ?></td>
+                                    <td>
+                                        <a href="../view-review.php?review_id=<?php echo $review['review_id']; ?>">View More</a>
+                                        <form method="POST" action="../../functions/delete-review.php" style="display:inline;">
+                                            <input type="hidden" name="review_id" value="<?php echo $review['review_id']; ?>">
+                                            <button type="submit" class="delete-button">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
                 <?php else: ?>
                     <p>You have no reviews.</p>
                 <?php endif; ?>
             </div>
         </div>
     </div>
-
-    <div class="active-users">
-        <h1>Top Users</h1>
-        <?php if ($topUsersResult->num_rows > 0): ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Total Reviews</th>
-                        <th>Total Blogs</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while ($user = $topUsersResult->fetch_assoc()): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($user['username']); ?></td>
-                            <td><?php echo htmlspecialchars($user['total_reviews']); ?></td>
-                            <td><?php echo htmlspecialchars($user['total_blogs']); ?></td>
-                        </tr>
-                    <?php endwhile; ?>
-                </tbody>
-            </table>
-        <?php else: ?>
-            <p>No top users found.</p>
-        <?php endif; ?>
-    </div>
 </section>
+
+<footer>
+    <?php include '../footer.php'; ?>
+</footer>
+
+<script>
+    // Modal JavaScript functions
+    function openModal() {
+        document.getElementById('addBlogModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('addBlogModal').style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('addBlogModal');
+        if (event.target === modal) {
+            closeModal();
+        }
+    }
+</script>
+
 </body>
 </html>
-
