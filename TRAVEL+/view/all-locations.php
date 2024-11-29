@@ -3,25 +3,9 @@
 session_start(); 
 include '../db/db-config.php';
 
-
 try {
     $dbConnection = getDatabaseConnection();
-    $query = "
-    SELECT 
-        l.location_id, 
-        l.location_name, 
-        l.description,
-        li.picture
-    FROM locations l
-    LEFT JOIN (
-        SELECT 
-            location_id, 
-            MIN(picture) AS picture 
-        FROM location_pictures
-        GROUP BY location_id
-    ) li ON l.location_id = li.location_id
-";
-
+    $query = "SELECT location_id, location_name, description FROM locations";
     $stmt = $dbConnection->prepare($query);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -36,7 +20,6 @@ try {
 } catch (Exception $e) {
     die("Error fetching locations: " . htmlspecialchars($e->getMessage()));
 }
-
 
 ?>
 
@@ -85,8 +68,7 @@ try {
         <?php if (!empty($locations)): ?>
             <?php foreach ($locations as $location): ?>
                 <div class="location-card">
-                <img src="<?php echo htmlspecialchars($location['picture'] ?: '../assets/images/default-image.png'); ?>" class="brief-view" alt="Location Image">
-
+                    <img src ="../assets/images/default-image.png" class="brief-view">
                     <div class="location-header">
                         <h2><?php echo htmlspecialchars($location['location_name']); ?></h2>
                     </div>
@@ -96,9 +78,7 @@ try {
                     <div class="location-actions">
                         <a href="view-location.php?location_id=<?php echo $location['location_id']; ?>" class="details-btn">View Details</a>
                         <button class="wishlist-btn" data-location-id="<?php echo $location['location_id']; ?>">Add to Wishlist</button>
-                </div>
-</div>
-
+                    </div>
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
