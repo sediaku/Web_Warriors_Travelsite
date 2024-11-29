@@ -32,6 +32,12 @@ button{
     height: 15%;
 }
 
+#pic{
+    width:100%;
+    max-height: 95%;
+}
+
+
 .right button{
     width: 15%;
 }

@@ -54,7 +54,7 @@ $message = isset($_GET['message']) ? htmlspecialchars($_GET['message']) : null;
                     <button type="submit" name="add-to-wishlist" class="wishlist">Add to Wishlist</button>
                 </form>
 
-                <button class="view-pictures">View Pictures</button>
+                <button class="view-pictures" onclick="window.location.href='view-pictures.php?location_id=<?php echo $locationId; ?>'">View Pictures</button>
 
             </div>
 

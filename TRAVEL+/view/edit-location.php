@@ -40,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $priceRange = $_POST['price_range'];
     $bookingLink = $_POST['booking_link'];
 
+    // Update location details in the database
     $updateQuery = "
         UPDATE locations 
         SET 
@@ -54,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             price_range = ?, 
             booking_link = ?
         WHERE location_id = ?";
+    
     $updateStmt = $dbConnection->prepare($updateQuery);
     $updateStmt->bind_param(
         "sssssssssss",
@@ -71,14 +73,76 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
 
     if ($updateStmt->execute()) {
+            // Handle image uploads
+            if (!empty($_FILES['location_pictures']['tmp_name'][0])) {
+                $uploadDir = '../assets/images/location_pics/';
+                
+                // Ensure upload directory exists
+                if (!is_dir($uploadDir)) {
+                    mkdir($uploadDir, 0755, true);
+                }
+
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
+                foreach ($_FILES['location_pictures']['tmp_name'] as $key => $tmpName) {
+                    // Skip empty uploads
+                    if (empty($tmpName)) continue;
+
+                    $originalFileName = basename($_FILES['location_pictures']['name'][$key]);
+                    
+                    // Generate a unique filename
+                    $uniqueFileName = uniqid('img_', true) . '_' . $originalFileName;
+                    $filePath = $uploadDir . $uniqueFileName;
+
+                    // Validate file type
+                    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                    $detectedType = finfo_file($finfo, $tmpName);
+                    finfo_close($finfo);
+
+                    if (in_array($detectedType, $allowedTypes)) {
+                        // Validate file size (optional, limit to 5MB)
+                        if ($_FILES['location_pictures']['size'][$key] <= 5 * 1024 * 1024) {
+                            if (move_uploaded_file($tmpName, $filePath)) {
+                                // Prepare the SQL to insert or update the picture path
+                                $insertPicQuery = "
+                                    INSERT INTO location_pictures (location_id, picture) 
+                                    VALUES (?, ?)
+                                    ON DUPLICATE KEY UPDATE picture = ?";
+                                
+                                $insertPicStmt = $dbConnection->prepare($insertPicQuery);
+                                
+                                // Bind the location_id and file path twice (for insert and update)
+                                $insertPicStmt->bind_param("iss", $locationId, $filePath, $filePath);
+                                
+                                if (!$insertPicStmt->execute()) {
+                                    // Log error if insertion fails
+                                    error_log("Failed to insert picture for location ID $locationId: " . $insertPicStmt->error);
+                                }
+                                
+                                $insertPicStmt->close();
+                            } else {
+                                error_log("Failed to move uploaded file: $originalFileName");
+                            }
+                        } else {
+                            error_log("File too large: $originalFileName");
+                        }
+                    } else {
+                        error_log("Invalid file type: $originalFileName");
+                    }
+                }
+            }
+
         echo "<p>Location updated successfully!</p>";
         header("Location: admin/location-management.php");
         exit;
     } else {
         echo "<p>Failed to update location.</p>";
     }
+
+    $updateStmt->close();
 }
 
+// Close the previous location query statement and database connection
 $stmt->close();
 $dbConnection->close();
 ?>
@@ -100,7 +164,7 @@ $dbConnection->close();
 
 <main>
     <h1>Edit Location</h1>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         <label for="location_name">Location Name:</label>
         <input type="text" id="location_name" name="location_name" value="<?php echo htmlspecialchars($location['location_name']); ?>" required>
 
@@ -131,7 +195,8 @@ $dbConnection->close();
         <label for="booking_link">Booking Link:</label>
         <input type="text" id="booking_link" name="booking_link" value="<?php echo htmlspecialchars($location['booking_link']); ?>" required>
 
-        <label for="picture">Add Pictures:</label>
+        <label for="location_pictures">Add Pictures:</label>
+        <input type="file" id="location_pictures" name="location_pictures[]" multiple accept="image/jpeg,image/png,image/gif">
        
 
         <button type="submit">Save Changes</button>

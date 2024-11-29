@@ -12,7 +12,7 @@ function getUserDetails($userId, $conn) {
     }
 
     // Fetch user's blog posts
-    $query = "SELECT post_id, title, created_at FROM blog_posts WHERE user_id = ? ORDER BY created_at DESC";
+    $query = "SELECT blog_id, title, published_date FROM blog WHERE user_id = ? ORDER BY published_date DESC";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $userId);
     $stmt->execute();
