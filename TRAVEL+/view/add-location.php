@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $contactInfo = trim($_POST['contact_info']);
     $priceRange = trim($_POST['price_range']);
     $bookingLink = trim($_POST['booking_link']);
-    
+    $average_rating = trim($_POST['average_rating']); // Corrected variable name
 
     // Validate inputs
     if (empty($locationName) || empty($city) || empty($country) || empty($description)) {
@@ -24,13 +24,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $dbConnection = getDatabaseConnection();
             
             // Insert the new location
-            $query = "INSERT INTO locations (location_name, address, city, country, category, description, opening_hours, contact_info, price_range, booking_link) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $query = "INSERT INTO locations (location_name, `address`, city, country, category, `description`, opening_hours, contact_info, price_range, booking_link, average_rating) 
+                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $dbConnection->prepare($query);
-            $stmt->bind_param("ssssssssss", $locationName, $address, $city, $country, $category, $description, $openingHours, $contactInfo, $priceRange, $bookingLink);
+            $stmt->bind_param("sssssssssss", $locationName, $address, $city, $country, $category, $description, $openingHours, $contactInfo, $priceRange, $bookingLink, $average_rating); // Corrected bind_param to match placeholders
             
             if ($stmt->execute()) {
                 $success = "Location added successfully!";
-                header("Location: view/admin/admin-dashboard.php?success=" . urlencode($success));
+                header("Location: admin/admin-dashboard.php?success=" . urlencode($success));
                 exit;
             } else {
                 $error = "Failed to add location. Please try again.";
@@ -52,11 +53,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Location</title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/add-location.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
 </head>
 <body>
 <header>
-    <?php include 'navbar_in.php'; ?>
+<?php 
+        // Check if user is logged in and assign the appropriate navbar
+        if (isset($_SESSION['user_id'])) {
+            if ($_SESSION['role'] == 2) {
+                include '../view/admin/admin-navbar.php';  // For admin users
+            } else {
+                include 'navbar_in.php';   // For normal logged-in users
+            }
+        } else {
+            include 'navbar_guest.php';   // For logged-out users
+        }
+    ?>
 </header>
 
     <section class="add-location">
@@ -134,12 +147,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="booking_link">Booking Link</label>
                 <input type="url" id="booking_link" name="booking_link">
             </div>
+
+            <div>
+                <label for="average_rating">Average Rating</label>
+                <input type="text" id="average_rating" name="average_rating">
+            </div>
             
             <button type="submit">Add Location</button>
         </form>
     </section>
-   
-
     <footer>
         <?php include 'footer.php'; ?>
     </footer>
