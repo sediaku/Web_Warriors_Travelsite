@@ -209,6 +209,7 @@ $userReviewsResult = $userReviewsStmt->get_result();
             </div>
         </div>
     </div>
+    
 
     <!-- Top 5 Users Section -->
     <div class="top-users">
@@ -234,6 +235,15 @@ $userReviewsResult = $userReviewsStmt->get_result();
         <p>No users found.</p>
     <?php endif; ?>
     </div>
+    <!-- Add Location-->
+    <div class="location-management">
+    <div class="location-actions">
+        <form action="../add-location.php" method="get">
+            <button type="submit" class="btn btn-green">Add New Location</button>
+        </form>
+    </div>
+</div>
+
 </section>
 
 <script>

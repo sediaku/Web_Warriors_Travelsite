@@ -30,6 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             if ($stmt->execute()) {
                 $success = "Location added successfully!";
+                header("Location: view/admin/admin-dashboard.php?success=" . urlencode($success));
+                exit;
             } else {
                 $error = "Failed to add location. Please try again.";
             }
@@ -136,6 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit">Add Location</button>
         </form>
     </section>
+   
 
     <footer>
         <?php include 'footer.php'; ?>
