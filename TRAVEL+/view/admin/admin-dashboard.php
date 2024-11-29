@@ -56,11 +56,11 @@ $userBlogsStmt->execute();
 $userBlogsResult = $userBlogsStmt->get_result();
 
 // Fetch user's reviews
-$userReviewsQuery = "
-    SELECT reviews.review_id, reviews.review_text, reviews.rating, reviews.review_date, locations.location_name 
-    FROM reviews 
-    INNER JOIN locations ON reviews.location_id = locations.location_id 
-    WHERE reviews.user_id = ? 
+$userReviewsQuery = " 
+    SELECT reviews.review_id, reviews.review_text, reviews.rating, reviews.review_date, locations.location_name, locations.location_id  
+    FROM reviews  
+    INNER JOIN locations ON reviews.location_id = locations.location_id  
+    WHERE reviews.user_id = ?  
     ORDER BY reviews.review_date DESC";
 $userReviewsStmt = $dbConnection->prepare($userReviewsQuery);
 $userReviewsStmt->bind_param("i", $userId);
@@ -148,7 +148,7 @@ $userReviewsResult = $userReviewsStmt->get_result();
                 <div class="modal-content">
                     <span class="close-button" onclick="closeModal()">&times;</span>
                     <h2>Add New Blog</h2>
-                    <form action="../functions/add-blog.php" method="POST">
+                    <form action="../../functions/add-blog.php" method="POST">
                         <label for="blogTitle">Blog Title:</label>
                         <input type="text" id="blogTitle" name="blog_title" required>
 
@@ -156,16 +156,12 @@ $userReviewsResult = $userReviewsStmt->get_result();
                         <textarea id="blogContent" name="blog_content" rows="5" required></textarea>
 
                         <label for="blogLocation">Location:</label>
-                        <select id="blogLocation" name="location_name" required>
-                            <option value="">-- Select Location --</option>
+                        <select id="blogLocation" name="location_id" required>
                             <?php
-                            // Fetch all locations from the database
-                            $locationsQuery = "SELECT location_id, location_name FROM locations ORDER BY location_name ASC";
+                            $locationsQuery = "SELECT location_id, location_name FROM locations";
                             $locationsResult = $dbConnection->query($locationsQuery);
-
                             while ($location = $locationsResult->fetch_assoc()) {
-                                $locationName = htmlspecialchars($location['location_name']);
-                                echo "<option value='{$locationName}'>{$locationName}</option>";
+                                echo "<option value='" . $location['location_id'] . "'>" . $location['location_name'] . "</option>";
                             }
                             ?>
                         </select>
@@ -197,7 +193,7 @@ $userReviewsResult = $userReviewsStmt->get_result();
                                     <td><?php echo htmlspecialchars($review['rating']); ?>/5</td>
                                     <td><?php echo htmlspecialchars($review['review_date']); ?></td>
                                     <td>
-                                        <a href="../view-review.php?review_id=<?php echo $review['review_id']; ?>">View More</a>
+                                        <a href="../view-location.php?location_id=<?php echo $review['location_id']; ?>">View More</a>
                                         <form method="POST" action="../../functions/delete-review.php" style="display:inline;">
                                             <input type="hidden" name="review_id" value="<?php echo $review['review_id']; ?>">
                                             <button type="submit" class="delete-button">Delete</button>
@@ -235,30 +231,18 @@ $userReviewsResult = $userReviewsStmt->get_result();
             </tbody>
         </table>
     <?php else: ?>
-        <p>No top users found.</p>
+        <p>No users found.</p>
     <?php endif; ?>
-</div>
+    </div>
 </section>
 
-<footer>
-    <?php include '../footer.php'; ?>
-</footer>
-
 <script>
-    // Modal JavaScript functions
     function openModal() {
-        document.getElementById('addBlogModal').style.display = 'block';
+        document.getElementById("addBlogModal").style.display = "block";
     }
 
     function closeModal() {
-        document.getElementById('addBlogModal').style.display = 'none';
-    }
-
-    window.onclick = function(event) {
-        const modal = document.getElementById('addBlogModal');
-        if (event.target === modal) {
-            closeModal();
-        }
+        document.getElementById("addBlogModal").style.display = "none";
     }
 </script>
 
