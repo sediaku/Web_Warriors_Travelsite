@@ -26,6 +26,10 @@ document.addEventListener('DOMContentLoaded', function() {
     udashboardLink.href = 'user-dashboard.php';
     udashboardLink.textContent = 'My Dashboard';
 
+    const profileLink = document.createElement('a');
+    udashboardLink.href = 'view-profile.php';
+    udashboardLink.textContent = 'My Profile';
+
     const wishlistLink = document.createElement('a');
     wishlistLink.href = 'wishlist.php';
     wishlistLink.textContent = 'My Wishlist';
@@ -35,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
     logoutLink.textContent = 'Logout';
 
     accountModal.appendChild(udashboardLink);
+    accountModal.appendChild(profileLink);
     accountModal.appendChild(wishlistLink);
     accountModal.appendChild(logoutLink);
 

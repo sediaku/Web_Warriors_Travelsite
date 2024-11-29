@@ -8,6 +8,7 @@
             
             <div class="account-dropdown" id="accountDropdown">
                 <a href="/Web_Warriors_Travelsite/TRAVEL+/view/user-dashboard.php">My Dashboard</a>
+                <a href="/Web_Warriors_Travelsite/TRAVEL+/view/view-profile.php">My Profile</a>
                 <a href="/Web_Warriors_Travelsite/TRAVEL+/view/wishlist.php">My Wishlist</a>
                 <a href="/Web_Warriors_Travelsite/TRAVEL+/view/logout.php">Logout</a>
             </div>
