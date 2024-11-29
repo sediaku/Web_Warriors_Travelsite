@@ -105,31 +105,6 @@ $userReviewsResult = $userReviewsStmt->get_result();
             </div>
         </div>
 
-        <!-- Top 5 Users Section -->
-        <div class="top-users">
-            <h2>Top 5 Users</h2>
-            <?php if ($topUsersResult->num_rows > 0): ?>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Username</th>
-                            <th>Total Blog Posts</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($user = $topUsersResult->fetch_assoc()): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($user['username']); ?></td>
-                                <td><?php echo htmlspecialchars($user['total_posts']); ?></td>
-                            </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
-            <?php else: ?>
-                <p>No top users found.</p>
-            <?php endif; ?>
-        </div>
-
         <!-- User's Blogs Section -->
         <div class="personal">
             <h1>My Blogs</h1>
@@ -238,6 +213,31 @@ $userReviewsResult = $userReviewsStmt->get_result();
             </div>
         </div>
     </div>
+
+    <!-- Top 5 Users Section -->
+    <div class="top-users">
+    <h2>Top 5 Users</h2>
+    <?php if ($topUsersResult->num_rows > 0): ?>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Total Blog Posts</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($user = $topUsersResult->fetch_assoc()): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($user['username']); ?></td>
+                        <td><?php echo htmlspecialchars($user['total_posts']); ?></td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <p>No top users found.</p>
+    <?php endif; ?>
+</div>
 </section>
 
 <footer>

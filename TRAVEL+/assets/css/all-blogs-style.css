@@ -1,0 +1,135 @@
+
+.all-locations {
+    padding: 20px;
+}
+
+.blogs-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: 1rem;
+}
+
+.search-container{
+    margin-bottom: 1.5rem;
+}
+
+.search-container input{
+    width: 30%;
+    border: 0.1rem solid rgb(8, 70, 8);
+    border-radius: 0.2rem;
+    padding: 2%;
+    height: 0.05rem;
+    font-size: 100%;
+}
+
+
+/* Location Card Styles */
+.blog-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0.1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0%;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.brief-view{
+    width: 100%;
+    max-height: 40%;
+}
+
+.blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
+}
+
+.blog-header h2 {
+    font-size: 1.5rem;
+    margin-left: 0.7rem;
+    margin-right: 0.7rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.blog-content {
+    font-size: 1rem;
+    color: #555;
+    margin-left: 0.7rem;
+    margin-right: 0.7rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+/* Action Buttons */
+.blog-actions {
+    margin-left: 0.7rem;
+    margin-right: 0.7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.details-btn,
+.wishlist-btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.details-btn:hover,
+.wishlist-btn:hover {
+    background-color: #0056b3;
+}
+
+.details-btn {
+    background-color: #28a745;
+}
+
+.details-btn:hover {
+    background-color: #218838;
+}
+
+
+
+
+/* Tablet Media Query */
+@media screen and (max-width: 768px) {   
+    .blog-header h2 {
+        font-size: 150%;
+    }
+    
+    .blog-content {
+        font-size: 120%;
+    }
+
+    .search-container input{
+        font-size: 130%;
+        width: 95%;
+        height: 0.5rem;
+    }
+}
+
+
+/* Mobile Media Query */
+@media screen and (max-width: 480px) {
+    .blog-header h2 {
+        font-size: 150%;
+    }
+    
+    .blog-content {
+        font-size: 120%;
+    }
+
+    .search-container input{
+        font-size: 130%;
+        width: 95%;
+        height: 0.5rem;
+    }
+}

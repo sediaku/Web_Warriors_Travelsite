@@ -73,6 +73,7 @@ try {
         <?php if (!empty($blogs)): ?>
             <?php foreach ($blogs as $blog): ?>
                 <div class="blog-card">
+                    <img src ="../assets/images/default-image.png" class="brief-view">
                     <div class="blog-header">
                         <h2><?php echo htmlspecialchars($blog['title']); ?></h2>
                         <p>By: <?php echo htmlspecialchars($blog['author']); ?></p>

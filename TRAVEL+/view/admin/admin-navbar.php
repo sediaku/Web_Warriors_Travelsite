@@ -16,9 +16,9 @@
         </div>
         
         <!-- Navigation Links -->
-        <a href="/Web_Warriors_Travelsite/TRAVEL+/view/storyboard.php">Storyboard</a>
         <a href="/Web_Warriors_Travelsite/TRAVEL+/view/contact-us.php">Contact Us</a>
         <a href="/Web_Warriors_Travelsite/TRAVEL+/view/about.php">About The Project</a>
+        <a href="/Web_Warriors_Travelsite/TRAVEL+/view/all-blogs.php">Blogs</a>
         <a href="/Web_Warriors_Travelsite/TRAVEL+/view/all-locations.php">Locations</a>
     </nav>
 
