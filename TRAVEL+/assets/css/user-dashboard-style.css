@@ -82,7 +82,6 @@ button:hover {
     cursor: pointer;
 }
 
-/* Form Styling */
 form {
     max-width: 800px;
     margin: 20px auto;
@@ -94,6 +93,7 @@ form {
 
 .form-group {
     margin-bottom: 15px;
+
 }
 
 label {

@@ -34,7 +34,8 @@ $reviewsQuery = "
         reviews.review_text,
         reviews.rating,
         reviews.review_date,
-        locations.location_name 
+        locations.location_name,
+        locations.location_id 
     FROM reviews 
     INNER JOIN locations ON reviews.location_id = locations.location_id 
     WHERE reviews.user_id = ? 
@@ -117,7 +118,7 @@ $reviewsResult = $reviewsStmt->get_result();
                 <textarea id="blogContent" name="blog_content" rows="5" required></textarea>
 
                 <label for="blogLocation">Location:</label>
-                <select id="blogLocation" name="location_name" required>
+                <select id="blogLocation" name="location_id" required>
                     <option value="">-- Select Location --</option>
                     <?php
                     // Fetch all locations from the database
@@ -126,7 +127,7 @@ $reviewsResult = $reviewsStmt->get_result();
 
                     while ($location = $locationsResult->fetch_assoc()) {
                         $locationName = htmlspecialchars($location['location_name']);
-                        echo "<option value='{$locationName}'>{$locationName}</option>";
+                        echo "<option value='" . $location['location_id'] . "'>" . $location['location_name'] . "</option>";
                     }
                     ?>
                 </select>
@@ -164,13 +165,16 @@ $reviewsResult = $reviewsStmt->get_result();
             $rating = htmlspecialchars($review['rating']);
             $reviewText = htmlspecialchars($review['review_text']);
             $reviewDate = htmlspecialchars($review['review_date']);
-
+            $location_id = $review['location_id'];
             echo "<tr>
                     <td>{$locationName}</td>
                     <td>{$rating}/5</td>
                     <td>{$reviewText}</td>
                     <td>{$reviewDate}</td>
                     <td>
+                        <a href='view-location.php?location_id={$location_id}'>
+                            <span class='material-symbols-outlined'>visibility</span>
+                        </a>
                         <form action='../functions/delete-review.php' method='POST' style='display:inline;'>
                             <input type='hidden' name='review_id' value='{$reviewId}'>
                             <button type='submit' onclick=\"return confirm('Are you sure you want to delete this review?');\">
@@ -190,6 +194,15 @@ $reviewsResult = $reviewsStmt->get_result();
     $reviewsStmt->close();
     $dbConnection->close();
     ?>
+
+    <!-- Add Location-->
+    <div class="location-management">
+    <div class="location-actions">
+        <form action="add-location.php" method="get">
+            <button type="submit" class="btn btn-green">Add New Location</button>
+        </form>
+    </div>
+    
 </main>
 
 <footer>
