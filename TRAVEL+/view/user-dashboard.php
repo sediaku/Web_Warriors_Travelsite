@@ -51,7 +51,7 @@ $reviewsResult = $reviewsStmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard</title>
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css//user-dashboard-style.css">
+    <link rel="stylesheet" href="../assets/css/user-dashboard-style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
 </head>
 <body>
@@ -102,14 +102,29 @@ $reviewsResult = $reviewsStmt->get_result();
     } else {
         echo "<p>You have no blogs.</p>";
     }
-
-    
     ?>
-    <!-- Add Blog Button -->
-    <div class="add-blog-button">
-        <a href="add-blog.php" class="add-blog-link">Add New Blog</a>
+
+    <!-- Add Blog Modal -->
+    <div id="addBlogModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h2>Add New Blog</h2>
+            <form action="../functions/add-blog.php" method="POST">
+                <label for="blogTitle">Blog Title:</label>
+                <input type="text" id="blogTitle" name="blog_title" required>
+
+                <label for="blogContent">Content:</label>
+                <textarea id="blogContent" name="blog_content" rows="5" required></textarea>
+
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+        </div>
     </div>
 
+    <!-- Add Blog Button -->
+    <div class="add-blog-button">
+        <button class="add-blog-link" onclick="openModal()">Add New Blog</button>
+    </div>
 
     <!-- Reviews Section -->
     <?php
@@ -154,9 +169,7 @@ $reviewsResult = $reviewsStmt->get_result();
     } else {
         echo "<p>You have no reviews.</p>";
     }
-    ?>
 
-    <?php
     $blogsStmt->close();
     $reviewsStmt->close();
     $dbConnection->close();
@@ -166,6 +179,23 @@ $reviewsResult = $reviewsStmt->get_result();
 <footer>
     <?php include 'footer.php'; ?>
 </footer>
+
+<script>
+    function openModal() {
+        document.getElementById('addBlogModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('addBlogModal').style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('addBlogModal');
+        if (event.target === modal) {
+            closeModal();
+        }
+    }
+</script>
 
 </body>
 </html>
